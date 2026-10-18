@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>نقاط لوكا</title><link rel="icon" href="images/luca-logo.png">
+<style>
+:root{--bg:#f6f1ea;--card:#fffdf9;--ink:#2b1d14;--mut:#7a6a5d;--line:#e6dccf;--brand:#5b3a24;--acc:#b8672f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,"Segoe UI",Tahoma,Arial,sans-serif;padding:16px}
+.c{max-width:420px;margin:4vh auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}
+.c img.l{height:56px;display:block;margin:0 auto 10px}h1{font-size:21px;text-align:center;margin:0 0 16px}
+input{width:100%;padding:11px 12px;margin:6px 0;border:1px solid var(--line);border-radius:10px;font:inherit;direction:ltr;text-align:right}
+button{width:100%;border:0;border-radius:10px;padding:11px;margin-top:10px;background:var(--brand);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+button.g{background:none;color:var(--brand);border:1px solid var(--line)}.err{color:#b3372c;font-size:14px;margin-top:8px;min-height:18px}
+.hid{display:none}.pts{text-align:center;margin:8px 0}.pts b{font-size:48px;color:var(--acc);display:block;line-height:1.1}
+#qr{width:230px;margin:10px auto;background:#fff;padding:6px;border-radius:12px;border:1px solid var(--line)}#qr svg{display:block;width:100%;height:auto}
+.note{background:#efe3d3;border-radius:10px;padding:10px;text-align:center;font-size:14px}
+ul{list-style:none;padding:0;margin:8px 0;font-size:14px}li{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)}
+.p{color:#2f7d4f}.m{color:#b3372c}small{color:var(--mut)}
+</style></head><body>
+<div class="c" id="auth"><img class="l" src="images/luca-logo.png" alt="LUCA"><h1>نقاط لوكا</h1>
+<div id="nameBox" class="hid"><input id="name" placeholder="الاسم" style="direction:rtl"></div>
+<input id="phone" type="tel" placeholder="رقم الموبايل 07XXXXXXXX"><input id="pass" type="password" placeholder="كلمة السر (6 أحرف على الأقل)">
+<button id="go">دخول</button><button class="g" id="sw">ما عندي حساب؟ سجّل جديد</button><div class="err" id="err"></div></div>
+<div class="c hid" id="acc"><img class="l" src="images/luca-logo.png" alt="LUCA"><h1 id="hi"></h1>
+<div class="pts"><b id="pts">0</b>نقطة</div><div class="note" id="worth"></div>
+<div id="qr"></div><p style="text-align:center;font-size:13px;color:var(--mut)">أعرض الكود للكاشير عند الدفع</p>
+<h3 style="margin:16px 0 0;font-size:15px">آخر العمليات</h3><ul id="log"></ul>
+<button class="g" id="out">تسجيل خروج</button><button class="g" onclick="location.href='./'">رجوع للمنيو</button></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import{getFirestore,doc,setDoc,onSnapshot,collection,query,orderBy,limit,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyAbfu5_nrZ2E_06eNYeYk7RL0SwLtzhCTk",authDomain:"luca-cafe.firebaseapp.com",projectId:"luca-cafe",appId:"1:576729730989:web:80ea8d4395c1de91189b24"});
+const auth=getAuth(app),db=getFirestore(app),$=s=>document.querySelector(s);
+const PTS_PER_JD_DISCOUNT=20; // لازم يطابق الرقم بصفحة الكاشير: كل 20 نقطة = 1 دينار خصم
+let reg=false,unsub=[];
+const norm=p=>{p=p.replace(/\D/g,"");if(p.startsWith("00"))p=p.slice(2);if(p.startsWith("0"))p="962"+p.slice(1);return p};
+const mail=p=>norm(p)+"@luca-loyalty.app";
+$("#sw").onclick=()=>{reg=!reg;$("#nameBox").classList.toggle("hid",!reg);$("#go").textContent=reg?"إنشاء حساب":"دخول";$("#sw").textContent=reg?"عندي حساب؟ دخول":"ما عندي حساب؟ سجّل جديد";$("#err").textContent=""};
+$("#go").onclick=async()=>{const e=$("#err");e.textContent="";const ph=$("#phone").value,pw=$("#pass").value,nm=$("#name").value.trim();
+ if(norm(ph).length<11){e.textContent="اكتب رقم موبايل صحيح";return}
+ try{if(reg){if(!nm){e.textContent="اكتب اسمك";return}
+  const u=await createUserWithEmailAndPassword(auth,mail(ph),pw);
+  await setDoc(doc(db,"customers",u.user.uid),{name:nm,phone:norm(ph),points:0,createdAt:serverTimestamp()})}
+ else await signInWithEmailAndPassword(auth,mail(ph),pw)}
+ catch(x){const c=x.code||"";e.textContent=/email-already/.test(c)?"هذا الرقم مسجل، اضغط دخول":/invalid-cred|wrong-pass|user-not/.test(c)?"الرقم أو كلمة السر غلط":/weak/.test(c)?"كلمة السر ضعيفة (6 أحرف على الأقل)":"صار خطأ، جرب مرة ثانية"}};
+$("#out").onclick=()=>signOut(auth);
+onAuthStateChanged(auth,u=>{unsub.forEach(f=>f());unsub=[];$("#auth").classList.toggle("hid",!!u);$("#acc").classList.toggle("hid",!u);if(!u)return;
+ const qr=qrcode(0,"M");qr.addData("LUCA:"+u.uid);qr.make();$("#qr").innerHTML=qr.createSvgTag({cellSize:6,margin:2,scalable:true});
+ unsub.push(onSnapshot(doc(db,"customers",u.uid),s=>{const d=s.data();if(!d)return;$("#hi").textContent="أهلاً "+d.name;$("#pts").textContent=d.points;
+  const dsc=Math.floor(d.points/PTS_PER_JD_DISCOUNT);$("#worth").textContent=dsc>0?`نقاطك بتعطيك خصم ${dsc} دينار 🎉`:`باقيلك ${PTS_PER_JD_DISCOUNT-d.points} نقطة لأول خصم`}));
+ unsub.push(onSnapshot(query(collection(db,"customers",u.uid,"log"),orderBy("at","desc"),limit(10)),s=>{
+  $("#log").innerHTML=s.docs.map(x=>{const d=x.data(),a=d.at?d.at.toDate().toLocaleDateString("ar-JO"):"";
+   return`<li><span>${d.type==="earn"?"مشتريات "+d.amount+" د":"استبدال خصم "+d.discount+" د"}<br><small>${a}</small></span><b class="${d.points>0?"p":"m"}">${d.points>0?"+":""}${d.points}</b></li>`}).join("")||"<li><small>ما في عمليات لسا</small></li>"}))});
+</script></body></html>
