@@ -1,63 +1,142 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow"><title>كاشير لوكا - النقاط</title><link rel="icon" href="images/luca-logo.png">
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#1d1410">
+<title>كاشير لوكا</title><link rel="icon" href="images/luca-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f1ea;--card:#fffdf9;--ink:#2b1d14;--mut:#7a6a5d;--line:#e6dccf;--brand:#5b3a24;--acc:#b8672f}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,"Segoe UI",Tahoma,Arial,sans-serif;padding:16px}
-.c{max-width:460px;margin:2vh auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}h1{font-size:20px;text-align:center;margin:0 0 12px}
-input{width:100%;padding:11px;margin:6px 0;border:1px solid var(--line);border-radius:10px;font:inherit;direction:ltr;text-align:right}
-button{width:100%;border:0;border-radius:10px;padding:11px;margin-top:8px;background:var(--brand);color:#fff;font:inherit;font-weight:600;cursor:pointer}
-button.g{background:none;color:var(--brand);border:1px solid var(--line)}button:disabled{opacity:.4}.hid{display:none}
-#reader{width:100%;border-radius:12px;overflow:hidden}.err{color:#b3372c;font-size:14px;min-height:18px;margin-top:6px}
-.cus{background:#efe3d3;border-radius:14px;padding:14px;text-align:center;margin:10px 0}.cus b{font-size:40px;color:var(--acc);display:block}
-.box{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}.box h3{margin:0 0 4px;font-size:15px}.pv{font-size:14px;color:var(--mut);min-height:20px}
-.toast{position:fixed;inset-inline:16px;bottom:16px;max-width:440px;margin:auto;background:#2f7d4f;color:#fff;padding:12px;border-radius:12px;text-align:center}
-</style></head><body>
-<div class="c" id="login"><h1>كاشير لوكا - النقاط</h1><input id="em" type="email" placeholder="إيميل الأدمن"><input id="pw" type="password" placeholder="كلمة السر">
-<button id="in">دخول</button><div class="err" id="le"></div></div>
-<div class="c hid" id="app"><h1>مسح كود الزبون</h1>
-<div id="reader"></div><button class="g" id="cam">تشغيل الكاميرا</button>
-<input id="ph" type="tel" placeholder="أو اكتب رقم موبايل الزبون"><button class="g" id="find">بحث بالرقم</button><div class="err" id="err"></div>
-<div id="cus" class="hid"><div class="cus"><div id="cn" style="font-weight:700"></div><small id="cp"></small><b id="cpts"></b>نقطة</div>
-<div class="box"><h3>مشتريات جديدة</h3><input id="amt" type="number" step="0.01" min="0" placeholder="المبلغ بالدينار"><div class="pv" id="pa"></div><button id="add" disabled>إضافة النقاط</button></div>
-<div class="box"><h3>استبدال نقاط بخصم</h3><input id="red" type="number" step="20" min="0" placeholder="عدد النقاط (مضاعفات 20)"><div class="pv" id="pr"></div><button id="use" disabled>تأكيد الخصم</button></div>
-<button class="g" id="next">زبون جديد</button></div><button class="g" id="out" style="margin-top:20px">تسجيل خروج</button></div>
-<div class="toast hid" id="t"></div>
+:root{--bg:#1d1410;--sf:#2a1d16;--sf2:#36271e;--ln:#4a372b;--tx:#f3e9dc;--mu:#a8927f;--gold:#e3b565;--ok:#7ccf9a;--bad:#ef7d72;--r:18px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:"Readex Pro",system-ui,"Segoe UI",Tahoma,sans-serif;line-height:1.5}
+body{padding:env(safe-area-inset-top) 16px calc(24px + env(safe-area-inset-bottom))}
+.w{max-width:480px;margin:0 auto}.hid{display:none!important}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0}button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.bar{display:flex;align-items:center;gap:12px;padding:14px 0}.bar img{height:40px;border-radius:10px}
+.bar h1{flex:1;margin:0;font-size:18px;font-weight:600}
+.ib{background:var(--sf);border:1px solid var(--ln);color:var(--mu);border-radius:12px;padding:8px 12px;font-size:13px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:var(--r);padding:18px}
+/* login */
+#login{margin-top:8vh;text-align:center}#login img{height:64px;margin-bottom:8px}#login h2{margin:0 0 4px;font-size:22px}#login p{margin:0 0 18px;color:var(--mu);font-size:14px}
+input{width:100%;background:var(--bg);border:1px solid var(--ln);border-radius:14px;padding:13px 14px;font-size:16px;direction:ltr;text-align:right}
+input::placeholder{color:#7d6a5b}input:focus{border-color:var(--gold);outline:none}
+.pri{width:100%;margin-top:12px;background:var(--gold);color:#2a1a08;font-weight:700;font-size:17px;border-radius:14px;padding:14px}
+.pri:disabled{background:var(--sf2);color:#7d6a5b;cursor:not-allowed}
+.gh{background:transparent;border:1px solid var(--ln);color:var(--tx);border-radius:14px;padding:12px 16px}
+.err{color:var(--bad);font-size:14px;margin-top:10px;min-height:20px}
+/* scanner */
+.vf{position:relative;border-radius:var(--r);overflow:hidden;background:#000;aspect-ratio:1/1;border:1px solid var(--ln)}
+#reader{width:100%;height:100%}#reader video{object-fit:cover}
+.vf i{position:absolute;width:44px;height:44px;border:4px solid var(--gold);pointer-events:none;border-radius:6px}
+.vf i:nth-child(1){top:14%;right:14%;border-left:0;border-bottom:0}.vf i:nth-child(2){top:14%;left:14%;border-right:0;border-bottom:0}
+.vf i:nth-child(3){bottom:14%;right:14%;border-left:0;border-top:0}.vf i:nth-child(4){bottom:14%;left:14%;border-right:0;border-top:0}
+.vf .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--sf);color:var(--mu);font-size:15px;z-index:2}
+.row{display:flex;gap:8px;margin-top:12px}.row input{flex:1}.row .gh{flex:none}
+/* customer */
+.who{display:flex;align-items:center;gap:14px}.av{width:52px;height:52px;border-radius:50%;background:var(--gold);color:#2a1a08;display:grid;place-items:center;font-weight:700;font-size:22px}
+.who b{display:block;font-size:19px;font-weight:600}.who small{color:var(--mu);direction:ltr;display:inline-block}
+.big{margin:18px 0 4px;text-align:center}.big strong{display:block;font-size:68px;line-height:1;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums}
+.big span{color:var(--mu);font-size:14px}.worth{margin-top:10px;text-align:center;font-size:14px;background:var(--sf2);border-radius:12px;padding:8px}
+.bump{animation:bump .5s ease}@keyframes bump{40%{transform:scale(1.12);color:var(--ok)}}
+@media(prefers-reduced-motion:reduce){.bump{animation:none}}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg);border:1px solid var(--ln);border-radius:14px;padding:4px;margin:16px 0 12px}
+.seg button{background:transparent;color:var(--mu);padding:10px;border-radius:10px;font-weight:600}.seg button.on{background:var(--sf2);color:var(--tx)}
+.chips{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.chips button{background:var(--sf2);border:1px solid var(--ln);color:var(--tx);border-radius:999px;padding:8px 16px;font-weight:500}
+.pv{min-height:24px;margin-top:12px;text-align:center;color:var(--mu);font-size:15px}.pv.ok{color:var(--ok)}.pv.no{color:var(--bad)}
+.toast{position:fixed;inset-inline:16px;bottom:calc(20px + env(safe-area-inset-bottom));max-width:448px;margin:auto;background:var(--ok);color:#10281a;font-weight:600;padding:14px;border-radius:14px;text-align:center;z-index:9}
+.nx{width:100%;margin-top:14px}
+.hd{display:flex;align-items:center;gap:12px;padding:14px 16px}.nm{flex:1;min-width:0}.nm b{display:block;font-size:18px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc{text-align:center;background:var(--sf2);border-radius:14px;padding:6px 16px}.pc strong{display:block;font-size:30px;line-height:1.15;color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums}.pc span{font-size:12px;color:var(--mu)}
+.worth{margin:10px 0 0;text-align:center;font-size:13px;color:var(--mu)}
+.disp{display:flex;justify-content:center;align-items:baseline;gap:10px;direction:ltr;margin:20px 0 4px}.disp span{font-size:76px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-1px}.disp em{font-style:normal;color:var(--gold);font-size:20px;font-weight:600}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;direction:ltr;margin:14px 0 2px}.pad button{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:14px 0;font-size:24px;font-weight:500}.pad button:active,.stp button:active{background:var(--sf2)}
+.stp{display:grid;grid-template-columns:64px 1fr 64px;gap:8px;margin:18px 0 2px}.stp button{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:14px 0;font-size:24px}.stp .mx{font-size:15px;color:var(--gold)}
+.seg{margin:14px 0 0}.pv{margin-top:6px}
+
+</style></head><body><div class="w">
+
+<div id="login" class="card"><img src="images/luca-logo.png" alt="LUCA"><h2>كاشير لوكا</h2><p>سجّل دخولك بحساب الكاشير</p>
+<input id="em" type="email" placeholder="الإيميل" autocomplete="username"><input id="pw" type="password" placeholder="كلمة السر" autocomplete="current-password" style="margin-top:10px">
+<button class="pri" id="in">دخول</button><div class="err" id="le"></div></div>
+
+<div id="app" class="hid">
+ <div class="bar"><img src="images/luca-logo.png" alt=""><h1>نقاط الزبائن</h1><button class="ib" id="out">خروج</button></div>
+
+ <div id="scanBox">
+  <div class="vf"><div id="reader"></div><i></i><i></i><i></i><i></i>
+   <div class="ph" id="ph0"><span>الكاميرا مطفية</span><button class="pri" id="cam" style="width:auto;margin:0;padding:12px 28px">شغّل الكاميرا</button></div></div>
+  <div class="row"><input id="ph" type="tel" placeholder="أو اكتب رقم موبايل الزبون"><button class="gh" id="find">بحث</button></div>
+  <div class="err" id="err"></div>
+ </div>
+
+ <div id="cus" class="hid">
+ <div class="card hd"><div class="av" id="av"></div><div class="nm"><b id="cn"></b><small id="cp"></small></div>
+  <div class="pc"><strong id="cpts">0</strong><span>نقطة</span></div></div>
+ <div class="worth" id="worth"></div>
+ <div class="seg"><button class="on" data-t="add">مشتريات جديدة</button><button data-t="use">استبدال بخصم</button></div>
+ <div id="tAdd">
+  <div class="disp"><span id="aShow">0</span><em>د.أ</em></div><div class="pv" id="pa"></div>
+  <div class="pad" id="pad"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button><button>.</button><button>0</button><button data-k="b">⌫</button></div>
+  <button class="pri" id="add" disabled>إضافة النقاط</button>
+ </div>
+ <div id="tUse" class="hid">
+  <div class="disp"><span id="rShow">0</span><em>نقطة</em></div><div class="pv" id="pr"></div>
+  <div class="stp"><button data-r="-20" aria-label="أنقص 20">−</button><button class="mx" data-r="max">الحد الأقصى</button><button data-r="20" aria-label="زد 20">+</button></div>
+  <button class="pri" id="use" disabled>تأكيد الخصم</button>
+ </div>
+ <button class="gh nx" id="next">زبون جديد</button>
+</div>
+</div><div class="toast hid" id="t"></div></div>
+
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import{getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import{getFirestore,doc,getDoc,getDocs,collection,query,where,runTransaction,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 const app=initializeApp({apiKey:"AIzaSyAbfu5_nrZ2E_06eNYeYk7RL0SwLtzhCTk",authDomain:"luca-cafe.firebaseapp.com",projectId:"luca-cafe",appId:"1:576729730989:web:80ea8d4395c1de91189b24"});
-const auth=getAuth(app),db=getFirestore(app),$=s=>document.querySelector(s);
-/* === الإعدادات: غيّرها حسب رغبتك === */
+const auth=getAuth(app),db=getFirestore(app),$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+/* === الإعدادات: لازم تطابق صفحة الزبون === */
 const POINTS_PER_JD=1;        // كل دينار = 1 نقطة
-const PTS_PER_DISCOUNT_JD=20; // كل 20 نقطة = 1 دينار خصم (لازم يطابق صفحة الزبون)
-let uid=null,cur=0,scanner=null,busy=false;
-const toast=m=>{const t=$("#t");t.textContent=m;t.classList.remove("hid");setTimeout(()=>t.classList.add("hid"),3500)};
+const PTS_PER_DISCOUNT_JD=20; // كل 20 نقطة = 1 دينار خصم
+let amtS="",redN=0,uid=null,cur=0,scanner=null,busy=false;
+const toast=m=>{const t=$("#t");t.textContent=m;t.classList.remove("hid");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.add("hid"),3500)};
 const norm=p=>{p=p.replace(/\D/g,"");if(p.startsWith("00"))p=p.slice(2);if(p.startsWith("0"))p="962"+p.slice(1);return p};
-$("#in").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("#em").value,$("#pw").value)}catch{$("#le").textContent="الإيميل أو كلمة السر غلط"}};
-$("#out").onclick=()=>signOut(auth);
+$("#in").onclick=async()=>{$("#le").textContent="";try{await signInWithEmailAndPassword(auth,$("#em").value,$("#pw").value)}catch{$("#le").textContent="الإيميل أو كلمة السر غلط"}};
+$("#pw").onkeydown=e=>{if(e.key==="Enter")$("#in").click()};
+$("#out").onclick=()=>{stopCam();signOut(auth)};
 onAuthStateChanged(auth,u=>{$("#login").classList.toggle("hid",!!u);$("#app").classList.toggle("hid",!u)});
 async function startCam(){try{if(!scanner)scanner=new Html5Qrcode("reader");
- await scanner.start({facingMode:"environment"},{fps:10,qrbox:240},t=>{if(t.startsWith("LUCA:"))load(t.slice(5))});$("#cam").classList.add("hid")}catch{$("#err").textContent="ما اشتغلت الكاميرا، اسمح بالوصول أو ابحث بالرقم"}}
+ await scanner.start({facingMode:"environment"},{fps:10,qrbox:{width:230,height:230}},t=>{if(t.startsWith("LUCA:"))load(t.slice(5))});$("#ph0").classList.add("hid")}
+ catch{$("#err").textContent="ما اشتغلت الكاميرا. اسمح للمتصفح باستخدامها أو ابحث برقم الموبايل."}}
+function stopCam(){if(scanner&&scanner.isScanning)return scanner.stop().then(()=>$("#ph0").classList.remove("hid")).catch(()=>{})}
 $("#cam").onclick=startCam;
 async function load(id){if(busy)return;busy=true;$("#err").textContent="";
- try{const s=await getDoc(doc(db,"customers",id));if(!s.exists()){$("#err").textContent="الكود مش معروف";return}show(id,s.data())}
- catch{$("#err").textContent="ما قدرت أقرأ الحساب (تأكد إنك داخل بإيميل الأدمن)"}finally{busy=false}}
-function show(id,d){uid=id;cur=d.points;if(scanner&&scanner.isScanning)scanner.stop().then(()=>$("#cam").classList.remove("hid")).catch(()=>{});
- $("#reader").classList.add("hid");$("#cus").classList.remove("hid");$("#cn").textContent=d.name;$("#cp").textContent="0"+d.phone.slice(3);$("#cpts").textContent=d.points;calc()}
-$("#find").onclick=async()=>{$("#err").textContent="";const p=norm($("#ph").value);
- try{const s=await getDocs(query(collection(db,"customers"),where("phone","==",p)));if(s.empty)$("#err").textContent="ما لقيت زبون بهالرقم";else show(s.docs[0].id,s.docs[0].data())}catch{$("#err").textContent="خطأ بالبحث"}};
-function calc(){const a=parseFloat($("#amt").value)||0,pts=Math.floor(a*POINTS_PER_JD);$("#pa").textContent=a>0?`راح تنضاف ${pts} نقطة`:"";$("#add").disabled=pts<1;
- const r=parseInt($("#red").value)||0,ok=r>0&&r%PTS_PER_DISCOUNT_JD===0&&r<=cur;$("#pr").textContent=r>0?(ok?`خصم ${r/PTS_PER_DISCOUNT_JD} دينار`:r>cur?"النقاط أكثر من رصيد الزبون":`لازم مضاعفات ${PTS_PER_DISCOUNT_JD}`):`الحد الأقصى: ${Math.floor(cur/PTS_PER_DISCOUNT_JD)*PTS_PER_DISCOUNT_JD} نقطة`;$("#use").disabled=!ok}
-$("#amt").oninput=calc;$("#red").oninput=calc;
-async function apply(delta,extra){const ref=doc(db,"customers",uid);
+ try{const s=await getDoc(doc(db,"customers",id));if(!s.exists()){$("#err").textContent="هذا الكود مش مسجل عندنا";return}show(id,s.data())}
+ catch{$("#err").textContent="ما قدرت أقرأ الحساب. تأكد إنك داخل بحساب الكاشير."}finally{busy=false}}
+function show(id,d){uid=id;cur=d.points;stopCam();$("#scanBox").classList.add("hid");$("#cus").classList.remove("hid");
+ $("#cn").textContent=d.name;$("#av").textContent=d.name.trim().charAt(0);$("#cp").textContent="0"+d.phone.slice(3);$("#cpts").textContent=d.points;tab("add");calc()}
+$("#find").onclick=async()=>{$("#err").textContent="";const p=norm($("#ph").value);if(!p)return;
+ try{const s=await getDocs(query(collection(db,"customers"),where("phone","==",p)));s.empty?$("#err").textContent="ما لقيت زبون بهالرقم":show(s.docs[0].id,s.docs[0].data())}catch{$("#err").textContent="صار خطأ بالبحث، جرب مرة ثانية"}};
+function tab(t){$$(".seg button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));$("#tAdd").classList.toggle("hid",t!=="add");$("#tUse").classList.toggle("hid",t!=="use")}
+$$(".seg button").forEach(b=>b.onclick=()=>tab(b.dataset.t));
+function calc(){const a=parseFloat(amtS)||0,pts=Math.floor(a*POINTS_PER_JD);$("#aShow").textContent=amtS||"0";
+ $("#pa").textContent=pts>0?`+${pts} نقطة`:"اكتب مبلغ الفاتورة";$("#pa").className="pv"+(pts>0?" ok":"");$("#add").disabled=pts<1;
+ const mx=Math.floor(cur/PTS_PER_DISCOUNT_JD)*PTS_PER_DISCOUNT_JD,r=redN,ok=r>0&&r%PTS_PER_DISCOUNT_JD===0&&r<=cur;$("#rShow").textContent=r;
+ $("#pr").textContent=r>0?(ok?`خصم ${r/PTS_PER_DISCOUNT_JD} دينار من الفاتورة`:`لازم مضاعفات ${PTS_PER_DISCOUNT_JD}`):(mx>0?`أقصى استبدال: ${mx} نقطة`:"الرصيد ما بكفي لخصم");
+ $("#pr").className="pv"+(ok?" ok":"");$("#use").disabled=!ok;
+ const d=mx/PTS_PER_DISCOUNT_JD;$("#worth").textContent=d>0?`رصيده بيعطيه خصم ${d} دينار`:`باقي ${PTS_PER_DISCOUNT_JD-cur} نقطة لأول خصم`}
+$$("#pad button").forEach(b=>b.onclick=()=>{const k=b.dataset.k||b.textContent;
+ if(k==="b")amtS=amtS.slice(0,-1);else if(k==="."){if(amtS&&!amtS.includes("."))amtS+="."}
+ else if(amtS.length<7&&!/\.\d\d$/.test(amtS))amtS=(amtS==="0"?"":amtS)+k;calc()});
+$$("[data-r]").forEach(b=>b.onclick=()=>{const mx=Math.floor(cur/PTS_PER_DISCOUNT_JD)*PTS_PER_DISCOUNT_JD,v=b.dataset.r;
+ redN=v==="max"?mx:Math.max(0,Math.min(mx,redN+ +v));calc()});
+async function apply(delta,extra){const ref=doc(db,"customers",uid);$("#add").disabled=$("#use").disabled=true;
  try{const n=await runTransaction(db,async tx=>{const s=await tx.get(ref),p=s.data().points+delta;if(p<0)throw new Error("neg");
   tx.update(ref,{points:p});tx.set(doc(collection(db,"customers",uid,"log")),{points:delta,at:serverTimestamp(),by:auth.currentUser.email,...extra});return p});
-  cur=n;$("#cpts").textContent=n;$("#amt").value="";$("#red").value="";calc();toast("تمت العملية ✓ الرصيد الجديد: "+n)}
- catch{$("#err").textContent="فشلت العملية، جرب مرة ثانية"}}
-$("#add").onclick=()=>{const a=parseFloat($("#amt").value),p=Math.floor(a*POINTS_PER_JD);apply(p,{type:"earn",amount:a})};
-$("#use").onclick=()=>{const r=parseInt($("#red").value);apply(-r,{type:"redeem",discount:r/PTS_PER_DISCOUNT_JD})};
-$("#next").onclick=()=>{uid=null;$("#cus").classList.add("hid");$("#reader").classList.remove("hid");$("#ph").value="";startCam()};
+  cur=n;const e=$("#cpts");e.textContent=n;e.classList.remove("bump");void e.offsetWidth;e.classList.add("bump");
+  amtS="";redN=0;calc();toast("تمت العملية ✓ الرصيد الجديد: "+n)}
+ catch{$("#err").textContent="";toast("فشلت العملية، جرب مرة ثانية");calc()}}
+$("#add").onclick=()=>{const a=parseFloat(amtS);apply(Math.floor(a*POINTS_PER_JD),{type:"earn",amount:a})};
+$("#use").onclick=()=>{const r=redN;apply(-r,{type:"redeem",discount:r/PTS_PER_DISCOUNT_JD})};
+$("#next").onclick=()=>{uid=null;$("#cus").classList.add("hid");$("#scanBox").classList.remove("hid");$("#ph").value="";amtS="";redN=0;$("#err").textContent="";startCam()};
 </script></body></html>
