@@ -19,9 +19,29 @@
     <script type="module">
       (async () => {
         try {
-          const r = await fetch("menu.json?v=" + Date.now(), { cache: "no-store" });
-          if (r.ok) {
-            const d = await r.json();
+          const FB = "https://firestore.googleapis.com/v1/projects/luca-cafe/databases/(default)/documents/";
+          const KEY = "AIzaSyAbfu5_nrZ2E_06eNYeYk7RL0SwLtzhCTk";
+          let d = null;
+          try {
+            const fr = await fetch(FB + "site/menu?key=" + KEY, { cache: "no-store" });
+            if (fr.ok) d = JSON.parse((await fr.json()).fields.json.stringValue);
+          } catch (e) {}
+          if (!d) {
+            const r = await fetch("menu.json?v=" + Date.now(), { cache: "no-store" });
+            if (r.ok) d = await r.json();
+          }
+          const imgs = {};
+          if (d) {
+            const ids = new Set();
+            (d.categories || []).forEach((c) => (c.items || []).forEach((i) => { if (String(i.image || "").startsWith("fb:")) ids.add(i.image); }));
+            await Promise.all([...ids].map(async (p) => {
+              try {
+                const ir = await fetch(FB + "images/" + encodeURIComponent(p.slice(3)) + "?key=" + KEY);
+                if (ir.ok) imgs[p] = (await ir.json()).fields.data.stringValue;
+              } catch (e) {}
+            }));
+          }
+          if (d) {
             const cats = (d.categories || [])
               .filter((c) => !c.hidden)
               .map((c) => ({
@@ -34,7 +54,7 @@
                     subtitle: i.subtitle || "",
                     price: Number(i.price) || 0,
                     description: i.description || "",
-                    image: i.image || "",
+                    image: imgs[i.image] || i.image || "",
                     category: c.name,
                     searchText: ((i.name || "") + " " + (i.subtitle || "") + " " + (i.keywords || "")).toLowerCase(),
                   })),

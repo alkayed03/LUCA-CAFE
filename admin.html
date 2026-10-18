@@ -101,32 +101,14 @@
     <h1>لوحة تحكم لوكا كافيه</h1>
     <p class="sub">سجّل دخولك عشان تعدّل المنيو</p>
 
-    <label class="f" for="inRepo">اسم الريبو على GitHub</label>
-    <input id="inRepo" type="text" class="ltr" placeholder="username/LUCA-CAFE" autocomplete="off" />
+    <label class="f" for="inEmail">الإيميل</label>
+    <input id="inEmail" type="email" class="ltr" placeholder="name@example.com" autocomplete="username" />
 
-    <label class="f" for="inToken">مفتاح الوصول (Token)</label>
-    <input id="inToken" type="password" class="ltr" placeholder="github_pat_..." autocomplete="off" />
-
-    <details class="help">
-      <summary>خيارات إضافية</summary>
-      <label class="f" for="inBranch">الفرع (Branch)</label>
-      <input id="inBranch" type="text" class="ltr" value="main" />
-      <label class="f" for="inSub">مجلد الموقع داخل الريبو (اتركه فاضي إذا الملفات بالجذر)</label>
-      <input id="inSub" type="text" class="ltr" placeholder="" />
-    </details>
+    <label class="f" for="inPass">كلمة السر</label>
+    <input id="inPass" type="password" class="ltr" placeholder="••••••••" autocomplete="current-password" />
 
     <button id="btnLogin" class="btn block">دخول</button>
     <div id="loginErr" class="err hidden"></div>
-
-    <details class="help">
-      <summary>كيف أطلع المفتاح (مرة وحدة بس)؟</summary>
-      <ol>
-        <li>افتح GitHub ← <b>Settings</b> ← <b>Developer settings</b> ← <b>Personal access tokens</b> ← <b>Fine-grained tokens</b> ← <b>Generate new token</b>.</li>
-        <li><b>Repository access</b>: اختار <b>Only select repositories</b> وحدد ريبو الكافيه فقط.</li>
-        <li><b>Permissions</b> ← <b>Repository permissions</b> ← <b>Contents</b> = <b>Read and write</b>.</li>
-        <li>انسخ المفتاح والصقه فوق. بينحفظ على جهازك بس، وما حدا غيرك بقدر يعدّل بدونه.</li>
-      </ol>
-    </details>
   </div>
 </div>
 
@@ -179,7 +161,7 @@
         <hr style="border:0;border-top:1px solid var(--line);margin:20px 0" />
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <a class="btn ghost sm" href="./menu" target="_blank" style="text-decoration:none">فتح المنيو</a>
-          <button id="btnReload" class="btn ghost sm">إعادة تحميل من GitHub</button>
+          <button id="btnReload" class="btn ghost sm">إعادة تحميل</button>
           <button id="btnLogout" class="btn danger sm">تسجيل خروج</button>
         </div>
       </div>
@@ -197,14 +179,23 @@
 <input id="filePick" type="file" accept="image/*" class="hidden" />
 <div id="toast" class="toast hidden"></div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+const firebaseConfig = {
+    apiKey: "AIzaSyAbfu5_nrZ2E_06eNYeYk7RL0SwLtzhCTk",
+    authDomain: "luca-cafe.firebaseapp.com",
+    projectId: "luca-cafe",
+    storageBucket: "luca-cafe.firebasestorage.app",
+    messagingSenderId: "576729730989",
+    appId: "1:576729730989:web:80ea8d4395c1de91189b24"
+  };
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const LS = "luca_admin_cfg_v1";
 
-  let cfg = null;          // {repo, branch, token, sub}
   let data = null;         // {settings, categories}
   let baseline = "";       // JSON string of last saved/loaded data
   let pending = {};        // path -> {b64, url}
@@ -231,87 +222,66 @@
   }
   window.addEventListener("beforeunload", (e) => { if (dirty()) { e.preventDefault(); e.returnValue = ""; } });
 
-  /* ---------------- GitHub API ---------------- */
-  const sub = () => (cfg.sub ? cfg.sub.replace(/^\/+|\/+$/g, "") + "/" : "");
-  async function gh(path, opts = {}) {
-    const res = await fetch("https://api.github.com/repos/" + cfg.repo + path, {
-      ...opts,
-      headers: {
-        Accept: "application/vnd.github+json",
-        Authorization: "Bearer " + cfg.token,
-        "X-GitHub-Api-Version": "2022-11-28",
-        ...(opts.body ? { "Content-Type": "application/json" } : {}),
-        ...(opts.headers || {}),
-      },
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      let m = "";
-      try { m = (await res.json()).message || ""; } catch {}
-      const e = new Error(m || res.statusText);
-      e.status = res.status;
-      throw e;
-    }
-    return res;
-  }
+  /* ---------------- Firebase ---------------- */
+  const fbApp = initializeApp(firebaseConfig);
+  const auth = getAuth(fbApp);
+  const db = getFirestore(fbApp);
+  const imgCache = {};   // "fb:<id>" -> data URL
+
   function explain(e) {
-    if (e.status === 401) return "المفتاح غير صحيح أو منتهي. اعمل مفتاح جديد.";
-    if (e.status === 403) return "المفتاح ما معه صلاحية. لازم Contents = Read and write على ريبو الكافيه.";
-    if (e.status === 404) return "ما لقيت الريبو أو الفرع أو الملف menu.json. تأكد من اسم الريبو (username/repo) ومن صلاحية المفتاح.";
-    if (e.status === 422 || e.status === 409) return "صار تعارض بالحفظ. أعد تحميل الصفحة وجرب مرة ثانية.\n" + e.message;
-    if (e instanceof TypeError) return "ما قدرت أتصل بـ GitHub. تأكد من الإنترنت.";
-    return e.message || "خطأ غير معروف";
+    const c = (e && e.code) || "";
+    if (/invalid-credential|wrong-password|user-not-found|invalid-email/.test(c)) return "الإيميل أو كلمة السر غلط.";
+    if (/too-many-requests/.test(c)) return "محاولات كثيرة. استنى شوي وجرب مرة ثانية.";
+    if (/permission-denied/.test(c)) return "هذا الحساب مش مسموح له يعدّل. تأكد إنه نفس الإيميل المكتوب بقواعد Firestore.";
+    if (/unavailable|network/.test(c)) return "ما قدرت أتصل. تأكد من الإنترنت.";
+    return (e && e.message) || "خطأ غير معروف";
   }
 
   async function loadMenu() {
-    const res = await gh("/contents/" + sub() + "menu.json?ref=" + encodeURIComponent(cfg.branch), {
-      headers: { Accept: "application/vnd.github.raw+json" },
-    });
-    const json = JSON.parse(await res.text());
-    if (!Array.isArray(json.categories)) throw new Error("ملف menu.json شكله غير صحيح");
+    let json, fromDb = false;
+    const snap = await getDoc(doc(db, "site", "menu"));
+    if (snap.exists()) { json = JSON.parse(snap.data().json); fromDb = true; }
+    else {
+      const r = await fetch("menu.json?v=" + Date.now(), { cache: "no-store" });
+      if (!r.ok) throw new Error("ما لقيت menu.json");
+      json = await r.json();
+    }
+    if (!Array.isArray(json.categories)) throw new Error("بيانات المنيو شكلها غير صحيح");
     json.settings = json.settings || {};
     json.categories.forEach((c) => { c.items = c.items || []; c.hidden = !!c.hidden; c.items.forEach((i) => { i.hidden = !!i.hidden; i.keywords = i.keywords || ""; i.subtitle = i.subtitle || ""; i.description = i.description || ""; i.image = i.image || ""; }); });
     data = json;
-    baseline = JSON.stringify(data);
+    baseline = fromDb ? JSON.stringify(data) : "";   // أول مرة: بنخليها "تعديلات ما اننشرت" لحتى تنحفظ بـ Firebase
     pending = {};
     activeCat = 0;
+    const ids = [...new Set(data.categories.flatMap((c) => c.items.map((i) => i.image)).filter((p) => String(p).startsWith("fb:")))];
+    await Promise.all(ids.map(async (p) => {
+      if (imgCache[p]) return;
+      try { const s = await getDoc(doc(db, "images", p.slice(3))); if (s.exists()) imgCache[p] = s.data().data; } catch {}
+    }));
+    return fromDb;
   }
 
   /* ---------------- login ---------------- */
   function showLogin(msg) {
     $("#appView").classList.add("hidden");
     $("#loginView").classList.remove("hidden");
-    const saved = JSON.parse(localStorage.getItem(LS) || "null") || {};
-    $("#inRepo").value = saved.repo || "";
-    $("#inBranch").value = saved.branch || "main";
-    $("#inSub").value = saved.sub || "";
-    $("#inToken").value = saved.token || "";
+    const b = $("#btnLogin"); b.disabled = false; b.textContent = "دخول";
     const er = $("#loginErr");
     if (msg) { er.textContent = msg; er.classList.remove("hidden"); } else er.classList.add("hidden");
   }
 
   async function doLogin() {
-    const repo = $("#inRepo").value.trim().replace(/^https?:\/\/github\.com\//, "").replace(/\.git$/, "").replace(/\/$/, "");
-    const token = $("#inToken").value.trim();
-    const branch = $("#inBranch").value.trim() || "main";
-    const s = $("#inSub").value.trim();
+    const email = $("#inEmail").value.trim();
+    const pass = $("#inPass").value;
     const er = $("#loginErr");
     er.classList.add("hidden");
-    if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) { er.textContent = "اكتب اسم الريبو بهالشكل: username/repo"; er.classList.remove("hidden"); return; }
-    if (!token) { er.textContent = "الصق مفتاح الوصول"; er.classList.remove("hidden"); return; }
-    cfg = { repo, token, branch, sub: s };
+    if (!email || !pass) { er.textContent = "اكتب الإيميل وكلمة السر"; er.classList.remove("hidden"); return; }
     const b = $("#btnLogin");
     b.disabled = true; b.innerHTML = '<span class="spin"></span>جاري الدخول...';
     try {
-      await loadMenu();
-      localStorage.setItem(LS, JSON.stringify(cfg));
-      enterApp();
+      await signInWithEmailAndPassword(auth, email, pass);   // onAuthStateChanged بكمل الباقي
     } catch (e) {
-      cfg = null;
-      er.textContent = explain(e);
-      er.classList.remove("hidden");
-    } finally {
-      b.disabled = false; b.textContent = "دخول";
+      showLogin(explain(e));
     }
   }
 
@@ -331,7 +301,7 @@
     ).join("");
   }
 
-  function imgSrc(p) { return pending[p] ? pending[p].url : p; }
+  function imgSrc(p) { return pending[p] ? pending[p].url : (imgCache[p] || p); }
 
   function cardHTML(ci, ii, showCat) {
     const it = data.categories[ci].items[ii];
@@ -475,7 +445,7 @@
   });
 
   /* ---------------- image upload (resize in browser) ---------------- */
-  function resizeImage(file, max = 900, quality = 0.82) {
+  function resizeImage(file, max = 700, quality = 0.78) {
     return new Promise((resolve, reject) => {
       const url = URL.createObjectURL(file);
       const img = new Image();
@@ -502,7 +472,7 @@
     try {
       const out = await resizeImage(f);
       const it = data.categories[pickTarget.ci].items[pickTarget.ii];
-      const path = `images/menu/uploads/${it.id}-${Date.now().toString(36)}.jpg`;
+      const path = "fb:" + String(it.id).replace(/[^\w-]/g, "") + "-" + Date.now().toString(36);
       pending[path] = out;
       it.image = path;
       renderList(); refreshSaveBar();
@@ -517,12 +487,12 @@
     try { toast('<span class="spin"></span>جاري التحميل...', "", 0); await loadMenu(); renderAll(); toast("تم التحميل", "ok"); }
     catch (e) { toast(esc(explain(e)), "bad"); }
   };
-  $("#btnLogout").onclick = () => {
+  $("#btnLogout").onclick = async () => {
     if (dirty() && !confirm("في تعديلات ما انحفظت. تسجيل الخروج رح يمسحها. متأكد؟")) return;
-    localStorage.removeItem(LS); cfg = null; data = null; showLogin();
+    data = null; await signOut(auth);
   };
 
-  /* ---------------- save (one commit) ---------------- */
+  /* ---------------- save ---------------- */
   function validate() {
     const problems = [];
     data.categories.forEach((c) => c.items.forEach((it, i) => {
@@ -538,30 +508,17 @@
     saving = true; refreshSaveBar();
     $("#btnSave").innerHTML = '<span class="spin"></span>جاري النشر...';
     try {
-      // images still referenced
       const used = new Set(data.categories.flatMap((c) => c.items.map((i) => i.image)));
-      const imgs = Object.entries(pending).filter(([p]) => used.has(p));
-
-      const ref = await (await gh("/git/ref/heads/" + cfg.branch)).json();
-      const headSha = ref.object.sha;
-      const commit = await (await gh("/git/commits/" + headSha)).json();
-
-      const entries = [];
-      for (const [p, o] of imgs) {
-        const blob = await (await gh("/git/blobs", { method: "POST", body: JSON.stringify({ content: o.b64, encoding: "base64" }) })).json();
-        entries.push({ path: sub() + p, mode: "100644", type: "blob", sha: blob.sha });
+      for (const [p, o] of Object.entries(pending)) {
+        if (!used.has(p)) continue;
+        await setDoc(doc(db, "images", p.slice(3)), { data: o.url });
+        imgCache[p] = o.url;
       }
-      const jsonText = JSON.stringify(data, null, 1) + "\n";
-      const mb = await (await gh("/git/blobs", { method: "POST", body: JSON.stringify({ content: jsonText, encoding: "utf-8" }) })).json();
-      entries.push({ path: sub() + "menu.json", mode: "100644", type: "blob", sha: mb.sha });
-
-      const tree = await (await gh("/git/trees", { method: "POST", body: JSON.stringify({ base_tree: commit.tree.sha, tree: entries }) })).json();
-      const nc = await (await gh("/git/commits", { method: "POST", body: JSON.stringify({ message: "تحديث المنيو من لوحة التحكم", tree: tree.sha, parents: [headSha] }) })).json();
-      await gh("/git/refs/heads/" + cfg.branch, { method: "PATCH", body: JSON.stringify({ sha: nc.sha }) });
+      await setDoc(doc(db, "site", "menu"), { json: JSON.stringify(data), updatedAt: serverTimestamp(), by: auth.currentUser.email });
 
       baseline = JSON.stringify(data);
       pending = {};
-      toast("تم النشر ✔ التعديلات بتظهر للزباين خلال دقيقة تقريباً (لما الموقع يخلص تحديث).", "ok", 9000);
+      toast("تم النشر ✔ التعديلات ظاهرة للزباين (حدّث صفحة الموقع).", "ok", 9000);
     } catch (e) {
       toast(esc(explain(e)), "bad", 9000);
     } finally {
@@ -572,18 +529,19 @@
   }
   $("#btnSave").onclick = save;
   $("#btnLogin").onclick = doLogin;
-  ["inRepo", "inToken", "inBranch", "inSub"].forEach((id) => $("#" + id).addEventListener("keydown", (e) => { if (e.key === "Enter") doLogin(); }));
+  ["inEmail", "inPass"].forEach((id) => $("#" + id).addEventListener("keydown", (e) => { if (e.key === "Enter") doLogin(); }));
 
   /* ---------------- boot ---------------- */
-  (async function init() {
-    const saved = JSON.parse(localStorage.getItem(LS) || "null");
-    if (saved && saved.repo && saved.token) {
-      cfg = saved;
-      try { await loadMenu(); enterApp(); return; }
-      catch (e) { cfg = null; showLogin(explain(e)); return; }
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) { showLogin(); return; }
+    try {
+      const fromDb = await loadMenu();
+      enterApp();
+      if (!fromDb) toast("أول مرة: هاي نسخة المنيو الحالية. اضغط \"نشر التعديلات\" لحتى تنحفظ على Firebase.", "", 12000);
+    } catch (e) {
+      showLogin(explain(e));
     }
-    showLogin();
-  })();
+  });
 })();
 </script>
 </body>
