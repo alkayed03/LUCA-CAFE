@@ -1,0 +1,1591 @@
+{
+ "settings": {
+  "phone": "0779703702",
+  "whatsapp": "https://whatsapp.com/channel/0029Vb99yyjCcW4qhmYHJz0B",
+  "instagram": "https://www.instagram.com/lucacafe22?stkn=MXRzMzd6ajlrNGxidQ==",
+  "facebook": "https://www.facebook.com/share/19cCdWJYgr/?mibextid=wwXIfr",
+  "maps": "https://maps.app.goo.gl/8EZApjbYDTVkRSif7?g_st=ic"
+ },
+ "categories": [
+  {
+   "name": "مشروبات ساخنة",
+   "hidden": false,
+   "items": [
+    {
+     "id": "hot-drinks-1-luca-coffee",
+     "name": "قهوة لوكا",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/hot-drinks/luca-coffee-1.jpg",
+     "keywords": "luca coffee قهوة لوكا",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-2-turkish-single",
+     "name": "قهوة تركية سنغل",
+     "subtitle": "",
+     "price": 1,
+     "description": "",
+     "image": "images/menu/hot-drinks/turkish-single-2.jpg",
+     "keywords": "turkish single قهوة تركية سنغل",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-3-turkish-double",
+     "name": "قهوة تركية دبل",
+     "subtitle": "",
+     "price": 1.5,
+     "description": "",
+     "image": "images/menu/hot-drinks/turkish-double-3.jpg",
+     "keywords": "turkish double قهوة تركية دبل",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-4-latte",
+     "name": "لاتيه",
+     "subtitle": "",
+     "price": 2.25,
+     "description": "",
+     "image": "images/menu/hot-drinks/latte-4.jpg",
+     "keywords": "latte لاتيه",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-5-cappuccino",
+     "name": "كابتشينو",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/hot-drinks/cappuccino-5.jpg",
+     "keywords": "cappuccino كابتشينو",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-6-spanish-latte",
+     "name": "سبانيش لاتيه",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/hot-drinks/spanish-latte-6.jpg",
+     "keywords": "spanish latte سبانيش لاتيه",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-7-french-coffee",
+     "name": "قهوة فرنسية",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/hot-drinks/french-coffee-7.jpg",
+     "keywords": "french coffee قهوة فرنسية",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-8-oreo-coffee",
+     "name": "قهوة أوريو",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/hot-drinks/oreo-coffee-8.jpg",
+     "keywords": "oreo coffee قهوة أوريو",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-9-mocha",
+     "name": "موكا",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/hot-drinks/mocha-9.jpg",
+     "keywords": "mocha موكا",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-10-americano",
+     "name": "أمريكانو",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/hot-drinks/americano-10.jpg",
+     "keywords": "americano أمريكانو",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-11-american-coffee",
+     "name": "قهوة أمريكية",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/hot-drinks/american-coffee-11.jpg",
+     "keywords": "american coffee قهوة أمريكية",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-12-espresso",
+     "name": "إسبريسو",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/hot-drinks/espresso-12.jpg",
+     "keywords": "espresso إسبريسو",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-13-hot-chocolate",
+     "name": "هوت شوكليت",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/hot-drinks/hot-chocolate-13.jpg",
+     "keywords": "hot chocolate هوت شوكليت",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-14-lotus-coffee",
+     "name": "قهوة لوتس",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/hot-drinks/lotus-coffee-14.jpg",
+     "keywords": "lotus coffee قهوة لوتس",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-15-pistachio-latte",
+     "name": "لاتيه بستاشيو",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/hot-drinks/pistachio-latte-15.jpg",
+     "keywords": "pistachio latte لاتيه بستاشيو",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-16-luca-sahlab",
+     "name": "سحلب لوكا",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/hot-drinks/luca-sahlab-16.jpg",
+     "keywords": "luca sahlab سحلب لوكا",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-17-tea",
+     "name": "شاي",
+     "subtitle": "",
+     "price": 1,
+     "description": "",
+     "image": "images/menu/hot-drinks/tea-17.jpg",
+     "keywords": "tea شاي",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-18-green-tea",
+     "name": "شاي أخضر",
+     "subtitle": "",
+     "price": 1,
+     "description": "",
+     "image": "images/menu/hot-drinks/green-tea-18.jpg",
+     "keywords": "green tea شاي أخضر",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-19-karak-tea",
+     "name": "شاي كرك",
+     "subtitle": "",
+     "price": 1.75,
+     "description": "",
+     "image": "images/menu/hot-drinks/karak-tea-19.jpg",
+     "keywords": "karak tea شاي كرك",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-20-moroccan-tea",
+     "name": "شاي مغربي",
+     "subtitle": "",
+     "price": 1.5,
+     "description": "",
+     "image": "images/menu/hot-drinks/moroccan-tea-20.jpg",
+     "keywords": "moroccan tea شاي مغربي",
+     "hidden": false
+    },
+    {
+     "id": "hot-drinks-21-zhourat",
+     "name": "زهورات",
+     "subtitle": "",
+     "price": 1,
+     "description": "",
+     "image": "images/menu/hot-drinks/zhourat-21.jpg",
+     "keywords": "zhourat زهورات",
+     "hidden": false
+    }
+   ]
+  },
+  {
+   "name": "مشروبات باردة",
+   "hidden": false,
+   "items": [
+    {
+     "id": "cold-drinks-1-frappuccino",
+     "name": "فرابوتشينو",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/frappuccino-1.jpg",
+     "keywords": "frappuccino فرابوتشينو",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-2-caramel-macchiato",
+     "name": "كراميل ماكياتو",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/caramel-macchiato-2.jpg",
+     "keywords": "caramel macchiato كراميل ماكياتو",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-3-mocha",
+     "name": "موكا",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/mocha-3.jpg",
+     "keywords": "mocha موكا",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-4-iced-latte",
+     "name": "لاتيه بارد",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/iced-latte-4.jpg",
+     "keywords": "iced latte لاتيه بارد",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-5-iced-spanish-latte",
+     "name": "سبانيش لاتيه بارد",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/iced-spanish-latte-5.jpg",
+     "keywords": "iced spanish latte سبانيش لاتيه بارد",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-6-iced-americano",
+     "name": "أمريكانو بارد",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/cold-drinks/iced-americano-6.jpg",
+     "keywords": "iced americano أمريكانو بارد",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-7-pistachio-latte",
+     "name": "لاتيه بستاشيو",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/cold-drinks/pistachio-latte-7.jpg",
+     "keywords": "pistachio latte لاتيه بستاشيو",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-8-biscuit-latte",
+     "name": "لاتيه بسكويت",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/biscuit-latte-8.jpg",
+     "keywords": "biscuit latte لاتيه بسكويت",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-9-luca-caramel",
+     "name": "كراميل لوكا",
+     "subtitle": "",
+     "price": 3.25,
+     "description": "",
+     "image": "images/menu/cold-drinks/luca-caramel-9.jpg",
+     "keywords": "luca caramel كراميل لوكا",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-10-toffee-latte",
+     "name": "لاتيه توفي",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/cold-drinks/toffee-latte-10.jpg",
+     "keywords": "toffee latte لاتيه توفي",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-11-luca-milk-shake",
+     "name": "ميلك شيك لوكا",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/cold-drinks/luca-milk-shake-11.jpg",
+     "keywords": "luca milk shake ميلك شيك لوكا",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-12-lotus",
+     "name": "لوتس",
+     "subtitle": "ميلك شيك",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/lotus-12.jpg",
+     "keywords": "lotus لوتس milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-13-snickers",
+     "name": "سنيكرز",
+     "subtitle": "ميلك شيك",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/snickers-13.jpg",
+     "keywords": "snickers سنيكرز milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-14-oreo",
+     "name": "أوريو",
+     "subtitle": "ميلك شيك",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/oreo-14.jpg",
+     "keywords": "oreo أوريو milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-15-kitkat",
+     "name": "كيت كات",
+     "subtitle": "ميلك شيك",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/kitkat-15.jpg",
+     "keywords": "kitkat كيت كات milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-16-brownies",
+     "name": "براونيز",
+     "subtitle": "ميلك شيك",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/brownies-16.jpg",
+     "keywords": "brownies براونيز milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-17-nutella",
+     "name": "نوتيلا",
+     "subtitle": "ميلك شيك",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/cold-drinks/nutella-17.jpg",
+     "keywords": "nutella نوتيلا milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-18-cheese-cake",
+     "name": "تشيز كيك",
+     "subtitle": "ميلك شيك",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/cold-drinks/cheese-cake-18.jpg",
+     "keywords": "cheese cake تشيز كيك milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-19-bubblegum",
+     "name": "بابل غم",
+     "subtitle": "ميلك شيك",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/cold-drinks/bubblegum-19.jpg",
+     "keywords": "bubblegum بابل غم milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-20-arabic",
+     "name": "عربي",
+     "subtitle": "ميلك شيك",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/cold-drinks/arabic-20.jpg",
+     "keywords": "arabic عربي milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-21-strawberry",
+     "name": "فراولة",
+     "subtitle": "ميلك شيك",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/cold-drinks/strawberry-21.jpg",
+     "keywords": "strawberry فراولة milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-22-vanilla",
+     "name": "فانيلا",
+     "subtitle": "ميلك شيك",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/cold-drinks/vanilla-22.jpg",
+     "keywords": "vanilla فانيلا milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-23-chocolate",
+     "name": "شوكولاتة",
+     "subtitle": "ميلك شيك",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/cold-drinks/chocolate-23.jpg",
+     "keywords": "chocolate شوكولاتة milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-24-ferrero-rocher",
+     "name": "فيريرو روشيه",
+     "subtitle": "ميلك شيك",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/cold-drinks/ferrero-rocher-24.jpg",
+     "keywords": "ferrero rocher فيريرو روشيه milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-25-kinder",
+     "name": "كندر",
+     "subtitle": "ميلك شيك",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/cold-drinks/kinder-25.jpg",
+     "keywords": "kinder كندر milkshake milk shake ميلك شيك",
+     "hidden": false
+    },
+    {
+     "id": "cold-drinks-26-pistachio",
+     "name": "بستاشيو",
+     "subtitle": "ميلك شيك",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/cold-drinks/pistachio-26.jpg",
+     "keywords": "pistachio بستاشيو milkshake milk shake ميلك شيك",
+     "hidden": false
+    }
+   ]
+  },
+  {
+   "name": "عصائر",
+   "hidden": false,
+   "items": [
+    {
+     "id": "juices-and-smoothies-1-orange",
+     "name": "برتقال",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/orange-1.jpg",
+     "keywords": "orange برتقال",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-2-strawberry",
+     "name": "فراولة",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/strawberry-2.jpg",
+     "keywords": "strawberry فراولة",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-3-lemon",
+     "name": "ليمون",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/lemon-3.jpg",
+     "keywords": "lemon ليمون",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-4-kiwi",
+     "name": "كيوي",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/kiwi-4.jpg",
+     "keywords": "kiwi كيوي",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-5-pineapple",
+     "name": "أناناس",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/pineapple-5.jpg",
+     "keywords": "pineapple أناناس",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-6-apple",
+     "name": "تفاح",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/apple-6.jpg",
+     "keywords": "apple تفاح",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-7-mango",
+     "name": "مانجا",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/mango-7.jpg",
+     "keywords": "mango مانجا",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-8-pomegranate",
+     "name": "رمان",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/pomegranate-8.jpg",
+     "keywords": "pomegranate رمان",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-9-kiwi-with-lemon",
+     "name": "كيوي مع ليمون",
+     "subtitle": "",
+     "price": 2.25,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/kiwi-with-lemon-9.jpg",
+     "keywords": "kiwi with lemon كيوي مع ليمون",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-10-banana-and-milk",
+     "name": "موز وحليب",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/banana-and-milk-10.jpg",
+     "keywords": "banana & milk موز وحليب",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-11-strawberry-and-milk",
+     "name": "فراولة وحليب",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/strawberry-and-milk-11.jpg",
+     "keywords": "strawberry & milk فراولة وحليب",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-12-orange-and-lemon",
+     "name": "برتقال وليمون",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/orange-and-lemon-12.jpg",
+     "keywords": "orange & lemon برتقال وليمون",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-13-mango-and-strawberry",
+     "name": "مانجا وفراولة",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/mango-and-strawberry-13.jpg",
+     "keywords": "mango & strawberry مانجا وفراولة",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-14-lemon-and-mint",
+     "name": "ليمون ونعنع",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/lemon-and-mint-14.jpg",
+     "keywords": "lemon & mint ليمون ونعنع",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-15-orange-and-pineapple",
+     "name": "برتقال وأناناس",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/orange-and-pineapple-15.jpg",
+     "keywords": "orange & pineapple برتقال وأناناس",
+     "hidden": false
+    }
+   ]
+  },
+  {
+   "name": "كوكتيلات وسموذي",
+   "hidden": false,
+   "items": [
+    {
+     "id": "mocktails-6-mojito",
+     "name": "موهيتو",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/mocktails/mojito-6.jpg",
+     "keywords": "mojito موهيتو",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-7-luca-mojito",
+     "name": "موهيتو لوكا",
+     "subtitle": "",
+     "price": 3.25,
+     "description": "",
+     "image": "images/menu/mocktails/luca-mojito-7.jpg",
+     "keywords": "luca mojito موهيتو لوكا",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-8-rainbow",
+     "name": "رينبو",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/mocktails/rainbow-8.jpg",
+     "keywords": "rainbow رينبو",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-9-luca-code-red",
+     "name": "لوكا كود رد",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/mocktails/luca-code-red-9.jpg",
+     "keywords": "luca code red لوكا كود رد",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-10-rose",
+     "name": "روز",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/mocktails/rose-10.jpg",
+     "keywords": "rose روز",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-11-luca-luca",
+     "name": "لوكا لوكا",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/mocktails/luca-luca-11.jpg",
+     "keywords": "luca luca لوكا لوكا",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-12-iced-tea",
+     "name": "شاي مثلج",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/mocktails/iced-tea-12.jpg",
+     "keywords": "iced tea شاي مثلج",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-13-passion-fruit",
+     "name": "باشن فروت",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/mocktails/passion-fruit-13.jpg",
+     "keywords": "passion fruit باشن فروت",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-14-avocado",
+     "name": "أفوكادو",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/mocktails/avocado-14.jpg",
+     "keywords": "avocado أفوكادو",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-15-einstein",
+     "name": "أينشتاين",
+     "subtitle": "",
+     "price": 3.75,
+     "description": "",
+     "image": "images/menu/mocktails/einstein-15.jpg",
+     "keywords": "einstein أينشتاين",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-16-awar-galb",
+     "name": "عوار قلب",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/mocktails/awar-galb-16.jpg",
+     "keywords": "awar galb عوار قلب",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-16-luca-smoothie",
+     "name": "سموذي لوكا",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/luca-smoothie-16.jpg",
+     "keywords": "luca smoothie سموذي لوكا",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-17-apple-and-caramel",
+     "name": "تفاح وكراميل",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/apple-and-caramel-17.jpg",
+     "keywords": "apple & caramel تفاح وكراميل",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-18-banana-and-mango",
+     "name": "موز ومانجا",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/banana-and-mango-18.jpg",
+     "keywords": "banana & mango موز ومانجا",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-19-blueberry",
+     "name": "توت أزرق",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/blueberry-19.jpg",
+     "keywords": "blueberry توت أزرق",
+     "hidden": false
+    },
+    {
+     "id": "juices-and-smoothies-20-dragon",
+     "name": "دراغون",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/juices-and-smoothies/dragon-20.jpg",
+     "keywords": "dragon دراغون",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-1-pineapple",
+     "name": "أناناس",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/mocktails/pineapple-1.jpg",
+     "keywords": "pineapple أناناس",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-2-watermelon",
+     "name": "بطيخ",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/mocktails/watermelon-2.jpg",
+     "keywords": "watermelon بطيخ",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-3-peach",
+     "name": "خوخ",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/mocktails/peach-3.jpg",
+     "keywords": "peach خوخ",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-4-strwberry",
+     "name": "فراولة",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/mocktails/strwberry-4.jpg",
+     "keywords": "strwberry فراولة",
+     "hidden": false
+    },
+    {
+     "id": "mocktails-5-apple",
+     "name": "تفاح",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/mocktails/apple-5.jpg",
+     "keywords": "apple تفاح",
+     "hidden": false
+    }
+   ]
+  },
+  {
+   "name": "حلويات",
+   "hidden": false,
+   "items": [
+    {
+     "id": "desserts-1-nutella",
+     "name": "نوتيلا",
+     "subtitle": "",
+     "price": 2.5,
+     "description": "",
+     "image": "images/menu/desserts/nutella-1.jpg",
+     "keywords": "nutella نوتيلا",
+     "hidden": false
+    },
+    {
+     "id": "desserts-2-kinder",
+     "name": "كندر",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/desserts/kinder-2.jpg",
+     "keywords": "kinder كندر",
+     "hidden": false
+    },
+    {
+     "id": "desserts-3-ferrer-rocher",
+     "name": "فيريرو روشيه",
+     "subtitle": "",
+     "price": 5,
+     "description": "",
+     "image": "images/menu/desserts/ferrer-rocher-3.jpg",
+     "keywords": "ferrer rocher فيريرو روشيه",
+     "hidden": false
+    },
+    {
+     "id": "desserts-4-mix-fruit",
+     "name": "فواكه مشكلة",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/desserts/mix-fruit-4.jpg",
+     "keywords": "mix fruit فواكه مشكلة",
+     "hidden": false
+    },
+    {
+     "id": "desserts-5-lotus",
+     "name": "لوتس",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/desserts/lotus-5.jpg",
+     "keywords": "lotus لوتس",
+     "hidden": false
+    },
+    {
+     "id": "desserts-6-oreo",
+     "name": "أوريو",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/desserts/oreo-6.jpg",
+     "keywords": "oreo أوريو",
+     "hidden": false
+    },
+    {
+     "id": "desserts-7-kit-kat",
+     "name": "كيت كات",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/desserts/kit-kat-7.jpg",
+     "keywords": "kit-kat كيت كات",
+     "hidden": false
+    },
+    {
+     "id": "desserts-8-double-chocolate-nutella-lotus",
+     "name": "دبل شوكولاتة (نوتيلا - لوتس)",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/desserts/double-chocolate-nutella-lotus-8.jpg",
+     "keywords": "double chocolate ( nutella - lotus ) دبل شوكولاتة (نوتيلا - لوتس)",
+     "hidden": false
+    },
+    {
+     "id": "desserts-9-pistachio",
+     "name": "بستاشيو",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/desserts/pistachio-9.jpg",
+     "keywords": "pistachio بستاشيو",
+     "hidden": false
+    },
+    {
+     "id": "desserts-10-waffle",
+     "name": "وافل",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/desserts/waffle-10.jpg",
+     "keywords": "waffle وافل",
+     "hidden": false
+    },
+    {
+     "id": "desserts-11-pancake",
+     "name": "بان كيك",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/desserts/pancake-11.jpg",
+     "keywords": "pancake بان كيك",
+     "hidden": false
+    },
+    {
+     "id": "desserts-12-crepe",
+     "name": "كريب",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/desserts/crepe-12.jpg",
+     "keywords": "crepe كريب",
+     "hidden": false
+    }
+   ]
+  },
+  {
+   "name": "أراجيل",
+   "hidden": false,
+   "items": [
+    {
+     "id": "shisha-1-luca-shisha",
+     "name": "أرجيلة لوكا",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/shisha/luca-shisha-1.jpg",
+     "keywords": "luca shisha أرجيلة لوكا",
+     "hidden": false
+    },
+    {
+     "id": "shisha-2-nakhla-shisha",
+     "name": "أرجيلة نخلة",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/shisha/nakhla-shisha-2.jpg",
+     "keywords": "nakhla shisha أرجيلة نخلة",
+     "hidden": false
+    },
+    {
+     "id": "shisha-3-mazaia-shisha",
+     "name": "أرجيلة مزايا",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/mazaia-shisha-3.jpg",
+     "keywords": "mazaia shisha أرجيلة مزايا",
+     "hidden": false
+    },
+    {
+     "id": "shisha-4-lemon-mint",
+     "name": "ليمون ونعنع",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/lemon-mint-4.jpg",
+     "keywords": "lemon mint ليمون ونعنع",
+     "hidden": false
+    },
+    {
+     "id": "shisha-5-cinnamon-gum",
+     "name": "قرفة وعلكة",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/cinnamon-gum-5.jpg",
+     "keywords": "cinnamon gum قرفة وعلكة",
+     "hidden": false
+    },
+    {
+     "id": "shisha-6-grapes-gum",
+     "name": "عنب وعلكة",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/grapes-gum-6.jpg",
+     "keywords": "grapes gum عنب وعلكة",
+     "hidden": false
+    },
+    {
+     "id": "shisha-7-watermelon-mint",
+     "name": "بطيخ ونعنع",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/watermelon-mint-7.jpg",
+     "keywords": "watermelon mint بطيخ ونعنع",
+     "hidden": false
+    },
+    {
+     "id": "shisha-8-mint-gum",
+     "name": "نعنع وعلكة",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/mint-gum-8.jpg",
+     "keywords": "mint gum نعنع وعلكة",
+     "hidden": false
+    },
+    {
+     "id": "shisha-9-candy",
+     "name": "كاندي",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/candy-9.jpg",
+     "keywords": "candy كاندي",
+     "hidden": false
+    },
+    {
+     "id": "shisha-10-blueberry",
+     "name": "توت أزرق",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/blueberry-10.jpg",
+     "keywords": "blueberry توت أزرق",
+     "hidden": false
+    },
+    {
+     "id": "shisha-11-grapes-berries",
+     "name": "عنب وتوت",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/grapes-berries-11.jpg",
+     "keywords": "grapes berries عنب وتوت",
+     "hidden": false
+    },
+    {
+     "id": "shisha-12-black",
+     "name": "بلاك",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/black-12.jpg",
+     "keywords": "black بلاك",
+     "hidden": false
+    },
+    {
+     "id": "shisha-13-mastika",
+     "name": "مستكة",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/mastika-13.jpg",
+     "keywords": "mastika مستكة",
+     "hidden": false
+    },
+    {
+     "id": "shisha-14-orange-mint",
+     "name": "برتقال ونعنع",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/orange-mint-14.jpg",
+     "keywords": "orange mint برتقال ونعنع",
+     "hidden": false
+    },
+    {
+     "id": "shisha-15-love",
+     "name": "لاف",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/shisha/love-15.jpg",
+     "keywords": "love لاف",
+     "hidden": false
+    }
+   ]
+  },
+  {
+   "name": "وجبات لوكا",
+   "hidden": false,
+   "items": [
+    {
+     "id": "luca-meals-1-zinger-dough-meal",
+     "name": "وجبة عجينة زنجر",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/zinger-dough-meal-1.jpg",
+     "keywords": "zinger dough meal وجبة عجينة زنجر",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-2-creamy-chicken-meal-with-dough",
+     "name": "وجبة دجاج بالكريمة مع عجينة",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/creamy-chicken-meal-with-dough-2.jpg",
+     "keywords": "creamy chicken meal with dough وجبة دجاج بالكريمة مع عجينة",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-3-mexican-dough-meal",
+     "name": "وجبة عجينة مكسيكية",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/mexican-dough-meal-3.jpg",
+     "keywords": "mexican dough meal وجبة عجينة مكسيكية",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-4-fajita-meal-with-dough",
+     "name": "وجبة عجينة فاهيتا",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/fajita-meal-with-dough-4.jpg",
+     "keywords": "fajita meal with dough وجبة عجينة فاهيتا",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-5-shawarma-dough-meal",
+     "name": "وجبة عجينة شاورما",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/shawarma-dough-meal-5.jpg",
+     "keywords": "shawarma dough meal وجبة عجينة شاورما",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-6-zinger",
+     "name": "زنجر",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/luca-meals/zinger-6.jpg",
+     "keywords": "zinger زنجر",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-7-fajita",
+     "name": "فاهيتا",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/luca-meals/fajita-7.jpg",
+     "keywords": "fajita فاهيتا",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-8-chicken-with-cream",
+     "name": "دجاج بالكريمة",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/luca-meals/chicken-with-cream-8.jpg",
+     "keywords": "chicken with cream دجاج بالكريمة",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-9-mexican",
+     "name": "مكسيكي",
+     "subtitle": "",
+     "price": 2.75,
+     "description": "",
+     "image": "images/menu/luca-meals/mexican-9.jpg",
+     "keywords": "mexican مكسيكي",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-10-strips",
+     "name": "ستريبس",
+     "subtitle": "",
+     "price": 3,
+     "description": "",
+     "image": "images/menu/luca-meals/strips-10.jpg",
+     "keywords": "strips ستريبس",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-11-barbecue-burger",
+     "name": "برغر باربكيو",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/barbecue-burger-11.jpg",
+     "keywords": "barbecue burger برغر باربكيو",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-12-burger-with-extra-cheese",
+     "name": "برغر مع جبنة إضافية",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/burger-with-extra-cheese-12.jpg",
+     "keywords": "burger with extra cheese برغر مع جبنة إضافية",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-13-crispy-burger",
+     "name": "برغر كريسبي",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/crispy-burger-13.jpg",
+     "keywords": "crispy burger برغر كريسبي",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-14-mexican-burger",
+     "name": "برغر مكسيكي",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/mexican-burger-14.jpg",
+     "keywords": "mexican burger برغر مكسيكي",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-15-barbecue-burger",
+     "name": "برغر باربكيو",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/barbecue-burger-15.jpg",
+     "keywords": "barbecue burger برغر باربكيو",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-16-mushroom-burger",
+     "name": "برغر مشروم",
+     "subtitle": "",
+     "price": 3.75,
+     "description": "",
+     "image": "images/menu/luca-meals/mushroom-burger-16.jpg",
+     "keywords": "mushroom burger برغر مشروم",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-17-classic-burger",
+     "name": "برغر كلاسيك",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/classic-burger-17.jpg",
+     "keywords": "classic burger برغر كلاسيك",
+     "hidden": false
+    },
+    {
+     "id": "luca-meals-18-burger-with-extra-cheese",
+     "name": "برغر مع جبنة إضافية",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/luca-meals/burger-with-extra-cheese-18.jpg",
+     "keywords": "burger with extra cheese برغر مع جبنة إضافية",
+     "hidden": false
+    }
+   ]
+  },
+  {
+   "name": "بيتزا",
+   "hidden": false,
+   "items": [
+    {
+     "id": "pizza-1-margherita-pizza",
+     "name": "بيتزا مارغريتا",
+     "subtitle": "",
+     "price": 3.5,
+     "description": "",
+     "image": "images/menu/pizza/margherita-pizza-1.jpg",
+     "keywords": "margherita pizza بيتزا مارغريتا",
+     "hidden": false
+    },
+    {
+     "id": "pizza-2-vegetable-pizza",
+     "name": "بيتزا خضار",
+     "subtitle": "",
+     "price": 3.75,
+     "description": "",
+     "image": "images/menu/pizza/vegetable-pizza-2.jpg",
+     "keywords": "vegetable pizza بيتزا خضار",
+     "hidden": false
+    },
+    {
+     "id": "pizza-3-zinger-pizza",
+     "name": "بيتزا زنجر",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/pizza/zinger-pizza-3.jpg",
+     "keywords": "zinger pizza بيتزا زنجر",
+     "hidden": false
+    },
+    {
+     "id": "pizza-4-supreme-pizza",
+     "name": "بيتزا سوبريم",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/pizza/supreme-pizza-4.jpg",
+     "keywords": "supreme pizza بيتزا سوبريم",
+     "hidden": false
+    },
+    {
+     "id": "pizza-5-mixed-cheese-pizza",
+     "name": "بيتزا أجبان مشكلة",
+     "subtitle": "",
+     "price": 3.75,
+     "description": "",
+     "image": "images/menu/pizza/mixed-cheese-pizza-5.jpg",
+     "keywords": "mixed cheese pizza بيتزا أجبان مشكلة",
+     "hidden": false
+    },
+    {
+     "id": "pizza-6-tandoori-chicken-pizza",
+     "name": "بيتزا دجاج تندوري",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/pizza/tandoori-chicken-pizza-6.jpg",
+     "keywords": "tandoori chicken pizza بيتزا دجاج تندوري",
+     "hidden": false
+    },
+    {
+     "id": "pizza-7-alfredo-pizza",
+     "name": "بيتزا ألفريدو",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/pizza/alfredo-pizza-7.jpg",
+     "keywords": "alfredo pizza بيتزا ألفريدو",
+     "hidden": false
+    },
+    {
+     "id": "pizza-8-barbecue-pizza",
+     "name": "بيتزا باربكيو",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/pizza/barbecue-pizza-8.jpg",
+     "keywords": "barbecue pizza بيتزا باربكيو",
+     "hidden": false
+    },
+    {
+     "id": "pizza-9-ranch-pizza",
+     "name": "بيتزا رانش",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/pizza/ranch-pizza-9.jpg",
+     "keywords": "ranch pizza بيتزا رانش",
+     "hidden": false
+    },
+    {
+     "id": "pizza-10-mexican-pizza",
+     "name": "بيتزا مكسيكية",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/pizza/mexican-pizza-10.jpg",
+     "keywords": "mexican pizza بيتزا مكسيكية",
+     "hidden": false
+    },
+    {
+     "id": "pizza-11-pepperoni-pizza",
+     "name": "بيتزا بيبروني",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/pizza/pepperoni-pizza-11.jpg",
+     "keywords": "pepperoni pizza بيتزا بيبروني",
+     "hidden": false
+    },
+    {
+     "id": "pizza-12-four-seasons-pizza",
+     "name": "بيتزا فور سيزون",
+     "subtitle": "",
+     "price": 4,
+     "description": "",
+     "image": "images/menu/pizza/four-seasons-pizza-12.jpg",
+     "keywords": "four seasons pizza بيتزا فور سيزون",
+     "hidden": false
+    },
+    {
+     "id": "pizza-13-caravan-pizza",
+     "name": "بيتزا كارافان",
+     "subtitle": "",
+     "price": 5.5,
+     "description": "",
+     "image": "images/menu/pizza/caravan-pizza-13.jpg",
+     "keywords": "caravan pizza بيتزا كارافان",
+     "hidden": false
+    }
+   ]
+  },
+  {
+   "name": "مناقيش",
+   "hidden": false,
+   "items": [
+    {
+     "id": "manakeesh-1-white-cheese",
+     "name": "جبنة بيضاء",
+     "subtitle": "",
+     "price": 1.5,
+     "description": "",
+     "image": "images/menu/manakeesh/white-cheese-1.jpg",
+     "keywords": "white cheese جبنة بيضاء",
+     "hidden": false
+    },
+    {
+     "id": "manakeesh-2-mozzarella-and-turkey",
+     "name": "موزاريلا وديك رومي",
+     "subtitle": "",
+     "price": 1.5,
+     "description": "",
+     "image": "images/menu/manakeesh/mozzarella-and-turkey-2.jpg",
+     "keywords": "mozzarella and turkey موزاريلا وديك رومي",
+     "hidden": false
+    },
+    {
+     "id": "manakeesh-3-salami-and-mozzarella",
+     "name": "سلامي وموزاريلا",
+     "subtitle": "",
+     "price": 1.5,
+     "description": "",
+     "image": "images/menu/manakeesh/salami-and-mozzarella-3.jpg",
+     "keywords": "salami and mozzarella سلامي وموزاريلا",
+     "hidden": false
+    },
+    {
+     "id": "manakeesh-4-sausage-and-mozzarella",
+     "name": "سجق وموزاريلا",
+     "subtitle": "",
+     "price": 1.5,
+     "description": "",
+     "image": "images/menu/manakeesh/sausage-and-mozzarella-4.jpg",
+     "keywords": "sausage and mozzarella سجق وموزاريلا",
+     "hidden": false
+    },
+    {
+     "id": "manakeesh-5-kraft-cheese",
+     "name": "جبنة كرافت",
+     "subtitle": "",
+     "price": 1.5,
+     "description": "",
+     "image": "images/menu/manakeesh/kraft-cheese-5.jpg",
+     "keywords": "kraft cheese جبنة كرافت",
+     "hidden": false
+    },
+    {
+     "id": "manakeesh-6-cheese-and-zaatar",
+     "name": "جبنة وزعتر",
+     "subtitle": "",
+     "price": 1.5,
+     "description": "",
+     "image": "images/menu/manakeesh/cheese-and-zaatar-6.jpg",
+     "keywords": "cheese and zaatar جبنة وزعتر",
+     "hidden": false
+    },
+    {
+     "id": "manakeesh-7-zatar",
+     "name": "زعتر",
+     "subtitle": "",
+     "price": 0.75,
+     "description": "",
+     "image": "images/menu/manakeesh/zatar-7.jpg",
+     "keywords": "zatar زعتر",
+     "hidden": false
+    }
+   ]
+  },
+  {
+   "name": "إضافات",
+   "hidden": false,
+   "items": [
+    {
+     "id": "additions-1-potatoes",
+     "name": "بطاطا",
+     "subtitle": "",
+     "price": 0.75,
+     "description": "",
+     "image": "images/menu/additions/potatoes-1.jpg",
+     "keywords": "potatoes بطاطا",
+     "hidden": false
+    },
+    {
+     "id": "additions-2-curly",
+     "name": "بطاطا كيرلي",
+     "subtitle": "",
+     "price": 1.5,
+     "description": "",
+     "image": "images/menu/additions/curly-2.jpg",
+     "keywords": "curly بطاطا كيرلي",
+     "hidden": false
+    },
+    {
+     "id": "additions-3-wedgies",
+     "name": "بطاطا ويدجز",
+     "subtitle": "",
+     "price": 1.25,
+     "description": "",
+     "image": "images/menu/additions/wedgies-3.jpg",
+     "keywords": "wedgies بطاطا ويدجز",
+     "hidden": false
+    },
+    {
+     "id": "additions-4-mozzarella-sticks",
+     "name": "أصابع موزاريلا",
+     "subtitle": "",
+     "price": 2,
+     "description": "",
+     "image": "images/menu/additions/mozzarella-sticks-4.jpg",
+     "keywords": "mozzarella sticks أصابع موزاريلا",
+     "hidden": false
+    }
+   ]
+  }
+ ]
+}

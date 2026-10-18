@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>لوحة تحكم لوكا كافيه</title>
+<link rel="icon" type="image/png" href="images/luca-logo.png" />
+<style>
+  :root{
+    --bg:#f6f1ea; --card:#fffdf9; --ink:#2b1d14; --muted:#7a6a5d; --line:#e6dccf;
+    --brand:#5b3a24; --brand-ink:#fff; --accent:#b8672f; --ok:#2f7d4f; --bad:#b3372c;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.5;padding-bottom:96px}
+  button,input,select,textarea{font:inherit;color:inherit}
+  .hidden{display:none!important}
+  .wrap{max-width:1100px;margin:0 auto;padding:16px}
+
+  /* login */
+  .login{max-width:460px;margin:6vh auto 0;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px 24px;box-shadow:0 10px 30px rgba(60,35,15,.08)}
+  .login img{height:56px;display:block;margin:0 auto 12px}
+  .login h1{margin:0 0 4px;font-size:22px;text-align:center}
+  .login p.sub{margin:0 0 20px;text-align:center;color:var(--muted);font-size:14px}
+  label.f{display:block;margin:12px 0 4px;font-size:13px;font-weight:600;color:var(--muted)}
+  input[type=text],input[type=password],input[type=number],input[type=url],textarea,select{
+    width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;outline:none}
+  input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(184,103,47,.15)}
+  textarea{resize:vertical;min-height:56px}
+  .ltr{direction:ltr;text-align:left}
+  .btn{border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:600;background:var(--brand);color:var(--brand-ink)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn.ghost{background:transparent;color:var(--brand);border:1px solid var(--line)}
+  .btn.danger{background:transparent;color:var(--bad);border:1px solid #efc9c5}
+  .btn.sm{padding:6px 10px;font-size:13px;border-radius:8px}
+  .btn.block{width:100%;margin-top:18px}
+  .err{background:#fdecea;color:var(--bad);border:1px solid #f3c6c1;padding:10px 12px;border-radius:10px;margin-top:14px;font-size:14px;white-space:pre-wrap}
+  details.help{margin-top:18px;font-size:14px;color:var(--muted)}
+  details.help summary{cursor:pointer;color:var(--accent);font-weight:600}
+  details.help ol{padding-inline-start:20px;margin:10px 0 0}
+  details.help li{margin:6px 0}
+  code{background:#f0e8dc;padding:1px 6px;border-radius:6px;font-size:12px;direction:ltr;unicode-bidi:embed}
+
+  /* topbar */
+  .top{position:sticky;top:0;z-index:20;background:rgba(246,241,234,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;gap:12px;padding:10px 16px}
+  .top img{height:38px}
+  .top h2{margin:0;font-size:17px;flex:1}
+  .tabs{display:flex;gap:6px}
+  .tab{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 14px;cursor:pointer;font-weight:600;font-size:14px}
+  .tab.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+  /* categories */
+  .cats{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:thin}
+  .chip{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;cursor:pointer;font-size:14px;white-space:nowrap}
+  .chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  .chip small{opacity:.7;margin-inline-start:4px}
+  .chip.off{opacity:.55;text-decoration:line-through}
+  .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 14px}
+  .tools .grow{flex:1;min-width:180px}
+
+  /* items */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px;display:flex;flex-direction:column;gap:8px}
+  .card.off{background:#f1ebe3;opacity:.8}
+  .card .row{display:flex;gap:10px}
+  .thumb{position:relative;flex:none;width:104px;height:84px;border-radius:10px;overflow:hidden;background:#eadfd1;border:1px dashed #cdbba7;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center}
+  .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .thumb span{position:absolute;inset-inline:0;bottom:0;background:rgba(43,29,20,.65);color:#fff;font-size:11px;padding:2px 0;text-align:center}
+  .card .fields{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0}
+  .two{display:grid;grid-template-columns:1fr 92px;gap:6px}
+  .card .acts{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .card .acts select{width:auto;padding:5px 8px;font-size:13px;max-width:150px}
+  .tag{font-size:11px;background:#efe3d3;border-radius:999px;padding:2px 8px;color:var(--brand);align-self:flex-start}
+  details.adv summary{cursor:pointer;font-size:12px;color:var(--muted)}
+  .empty{padding:40px 10px;text-align:center;color:var(--muted)}
+
+  /* settings */
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;max-width:620px}
+
+  /* save bar */
+  .savebar{position:fixed;inset-inline:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(60,35,15,.08)}
+  .savebar .wrap{display:flex;gap:10px;align-items:center;padding:10px 16px}
+  .savebar .msg{flex:1;font-size:14px;color:var(--muted)}
+  .savebar .msg.dirty{color:var(--accent);font-weight:600}
+  .toast{position:fixed;inset-inline:16px;bottom:84px;z-index:50;max-width:520px;margin:0 auto;background:var(--ink);color:#fff;border-radius:12px;padding:12px 16px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  .toast.ok{background:var(--ok)} .toast.bad{background:var(--bad)}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px;margin-inline-end:6px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  @media (max-width:520px){.grid{grid-template-columns:1fr}.top h2{font-size:15px}}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="loginView" class="wrap hidden">
+  <div class="login">
+    <img src="images/luca-logo.png" alt="LUCA" />
+    <h1>لوحة تحكم لوكا كافيه</h1>
+    <p class="sub">سجّل دخولك عشان تعدّل المنيو</p>
+
+    <label class="f" for="inRepo">اسم الريبو على GitHub</label>
+    <input id="inRepo" type="text" class="ltr" placeholder="username/LUCA-CAFE" autocomplete="off" />
+
+    <label class="f" for="inToken">مفتاح الوصول (Token)</label>
+    <input id="inToken" type="password" class="ltr" placeholder="github_pat_..." autocomplete="off" />
+
+    <details class="help">
+      <summary>خيارات إضافية</summary>
+      <label class="f" for="inBranch">الفرع (Branch)</label>
+      <input id="inBranch" type="text" class="ltr" value="main" />
+      <label class="f" for="inSub">مجلد الموقع داخل الريبو (اتركه فاضي إذا الملفات بالجذر)</label>
+      <input id="inSub" type="text" class="ltr" placeholder="" />
+    </details>
+
+    <button id="btnLogin" class="btn block">دخول</button>
+    <div id="loginErr" class="err hidden"></div>
+
+    <details class="help">
+      <summary>كيف أطلع المفتاح (مرة وحدة بس)؟</summary>
+      <ol>
+        <li>افتح GitHub ← <b>Settings</b> ← <b>Developer settings</b> ← <b>Personal access tokens</b> ← <b>Fine-grained tokens</b> ← <b>Generate new token</b>.</li>
+        <li><b>Repository access</b>: اختار <b>Only select repositories</b> وحدد ريبو الكافيه فقط.</li>
+        <li><b>Permissions</b> ← <b>Repository permissions</b> ← <b>Contents</b> = <b>Read and write</b>.</li>
+        <li>انسخ المفتاح والصقه فوق. بينحفظ على جهازك بس، وما حدا غيرك بقدر يعدّل بدونه.</li>
+      </ol>
+    </details>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="appView" class="hidden">
+  <div class="top">
+    <div class="wrap">
+      <img src="images/luca-logo.png" alt="" />
+      <h2>لوحة تحكم المنيو</h2>
+      <div class="tabs">
+        <button class="tab on" data-tab="items">الأصناف</button>
+        <button class="tab" data-tab="settings">الإعدادات</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- items tab -->
+    <section id="tabItems">
+      <div id="cats" class="cats"></div>
+      <div class="tools">
+        <button id="btnAddCat" class="btn ghost sm">+ تصنيف جديد</button>
+        <button id="btnRenCat" class="btn ghost sm">تعديل اسم التصنيف</button>
+        <button id="btnHideCat" class="btn ghost sm">إخفاء/إظهار التصنيف</button>
+        <button id="btnCatL" class="btn ghost sm" title="تقديم">→</button>
+        <button id="btnCatR" class="btn ghost sm" title="تأخير">←</button>
+        <button id="btnDelCat" class="btn danger sm">حذف التصنيف</button>
+      </div>
+      <div class="tools">
+        <input id="q" class="grow" type="text" placeholder="ابحث في كل الأصناف..." />
+        <button id="btnAddItem" class="btn">+ إضافة صنف</button>
+      </div>
+      <div id="list" class="grid"></div>
+    </section>
+
+    <!-- settings tab -->
+    <section id="tabSettings" class="hidden">
+      <div class="panel">
+        <h3 style="margin-top:0">معلومات التواصل</h3>
+        <label class="f" for="s_phone">رقم الهاتف</label>
+        <input id="s_phone" data-s="phone" type="text" class="ltr" />
+        <label class="f" for="s_whatsapp">رابط قناة/رقم واتساب</label>
+        <input id="s_whatsapp" data-s="whatsapp" type="url" class="ltr" />
+        <label class="f" for="s_instagram">رابط انستغرام</label>
+        <input id="s_instagram" data-s="instagram" type="url" class="ltr" />
+        <label class="f" for="s_facebook">رابط فيسبوك</label>
+        <input id="s_facebook" data-s="facebook" type="url" class="ltr" />
+        <label class="f" for="s_maps">رابط الموقع (خرائط جوجل)</label>
+        <input id="s_maps" data-s="maps" type="url" class="ltr" />
+        <hr style="border:0;border-top:1px solid var(--line);margin:20px 0" />
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <a class="btn ghost sm" href="./menu" target="_blank" style="text-decoration:none">فتح المنيو</a>
+          <button id="btnReload" class="btn ghost sm">إعادة تحميل من GitHub</button>
+          <button id="btnLogout" class="btn danger sm">تسجيل خروج</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="savebar">
+    <div class="wrap">
+      <div id="saveMsg" class="msg">ما في تعديلات</div>
+      <button id="btnSave" class="btn" disabled>نشر التعديلات</button>
+    </div>
+  </div>
+</div>
+
+<input id="filePick" type="file" accept="image/*" class="hidden" />
+<div id="toast" class="toast hidden"></div>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const LS = "luca_admin_cfg_v1";
+
+  let cfg = null;          // {repo, branch, token, sub}
+  let data = null;         // {settings, categories}
+  let baseline = "";       // JSON string of last saved/loaded data
+  let pending = {};        // path -> {b64, url}
+  let activeCat = 0;
+  let query = "";
+  let pickTarget = null;
+  let saving = false;
+
+  /* ---------------- helpers ---------------- */
+  function toast(msg, kind = "", ms = 4500) {
+    const t = $("#toast");
+    t.className = "toast " + kind;
+    t.innerHTML = msg;
+    clearTimeout(toast._t);
+    if (ms) toast._t = setTimeout(() => t.classList.add("hidden"), ms);
+  }
+  const dirty = () => !!data && JSON.stringify(data) !== baseline;
+
+  function refreshSaveBar() {
+    const d = dirty();
+    $("#saveMsg").textContent = d ? "في تعديلات لسا ما اننشرت" : "ما في تعديلات";
+    $("#saveMsg").className = "msg" + (d ? " dirty" : "");
+    $("#btnSave").disabled = !d || saving;
+  }
+  window.addEventListener("beforeunload", (e) => { if (dirty()) { e.preventDefault(); e.returnValue = ""; } });
+
+  /* ---------------- GitHub API ---------------- */
+  const sub = () => (cfg.sub ? cfg.sub.replace(/^\/+|\/+$/g, "") + "/" : "");
+  async function gh(path, opts = {}) {
+    const res = await fetch("https://api.github.com/repos/" + cfg.repo + path, {
+      ...opts,
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: "Bearer " + cfg.token,
+        "X-GitHub-Api-Version": "2022-11-28",
+        ...(opts.body ? { "Content-Type": "application/json" } : {}),
+        ...(opts.headers || {}),
+      },
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      let m = "";
+      try { m = (await res.json()).message || ""; } catch {}
+      const e = new Error(m || res.statusText);
+      e.status = res.status;
+      throw e;
+    }
+    return res;
+  }
+  function explain(e) {
+    if (e.status === 401) return "المفتاح غير صحيح أو منتهي. اعمل مفتاح جديد.";
+    if (e.status === 403) return "المفتاح ما معه صلاحية. لازم Contents = Read and write على ريبو الكافيه.";
+    if (e.status === 404) return "ما لقيت الريبو أو الفرع أو الملف menu.json. تأكد من اسم الريبو (username/repo) ومن صلاحية المفتاح.";
+    if (e.status === 422 || e.status === 409) return "صار تعارض بالحفظ. أعد تحميل الصفحة وجرب مرة ثانية.\n" + e.message;
+    if (e instanceof TypeError) return "ما قدرت أتصل بـ GitHub. تأكد من الإنترنت.";
+    return e.message || "خطأ غير معروف";
+  }
+
+  async function loadMenu() {
+    const res = await gh("/contents/" + sub() + "menu.json?ref=" + encodeURIComponent(cfg.branch), {
+      headers: { Accept: "application/vnd.github.raw+json" },
+    });
+    const json = JSON.parse(await res.text());
+    if (!Array.isArray(json.categories)) throw new Error("ملف menu.json شكله غير صحيح");
+    json.settings = json.settings || {};
+    json.categories.forEach((c) => { c.items = c.items || []; c.hidden = !!c.hidden; c.items.forEach((i) => { i.hidden = !!i.hidden; i.keywords = i.keywords || ""; i.subtitle = i.subtitle || ""; i.description = i.description || ""; i.image = i.image || ""; }); });
+    data = json;
+    baseline = JSON.stringify(data);
+    pending = {};
+    activeCat = 0;
+  }
+
+  /* ---------------- login ---------------- */
+  function showLogin(msg) {
+    $("#appView").classList.add("hidden");
+    $("#loginView").classList.remove("hidden");
+    const saved = JSON.parse(localStorage.getItem(LS) || "null") || {};
+    $("#inRepo").value = saved.repo || "";
+    $("#inBranch").value = saved.branch || "main";
+    $("#inSub").value = saved.sub || "";
+    $("#inToken").value = saved.token || "";
+    const er = $("#loginErr");
+    if (msg) { er.textContent = msg; er.classList.remove("hidden"); } else er.classList.add("hidden");
+  }
+
+  async function doLogin() {
+    const repo = $("#inRepo").value.trim().replace(/^https?:\/\/github\.com\//, "").replace(/\.git$/, "").replace(/\/$/, "");
+    const token = $("#inToken").value.trim();
+    const branch = $("#inBranch").value.trim() || "main";
+    const s = $("#inSub").value.trim();
+    const er = $("#loginErr");
+    er.classList.add("hidden");
+    if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) { er.textContent = "اكتب اسم الريبو بهالشكل: username/repo"; er.classList.remove("hidden"); return; }
+    if (!token) { er.textContent = "الصق مفتاح الوصول"; er.classList.remove("hidden"); return; }
+    cfg = { repo, token, branch, sub: s };
+    const b = $("#btnLogin");
+    b.disabled = true; b.innerHTML = '<span class="spin"></span>جاري الدخول...';
+    try {
+      await loadMenu();
+      localStorage.setItem(LS, JSON.stringify(cfg));
+      enterApp();
+    } catch (e) {
+      cfg = null;
+      er.textContent = explain(e);
+      er.classList.remove("hidden");
+    } finally {
+      b.disabled = false; b.textContent = "دخول";
+    }
+  }
+
+  function enterApp() {
+    $("#loginView").classList.add("hidden");
+    $("#appView").classList.remove("hidden");
+    renderAll();
+  }
+
+  /* ---------------- render ---------------- */
+  function renderAll() { renderCats(); renderList(); renderSettings(); refreshSaveBar(); }
+
+  function renderCats() {
+    if (activeCat >= data.categories.length) activeCat = Math.max(0, data.categories.length - 1);
+    $("#cats").innerHTML = data.categories.map((c, i) =>
+      `<button class="chip ${i === activeCat && !query ? "on" : ""} ${c.hidden ? "off" : ""}" data-cat="${i}">${esc(c.name)}<small>${c.items.length}</small></button>`
+    ).join("");
+  }
+
+  function imgSrc(p) { return pending[p] ? pending[p].url : p; }
+
+  function cardHTML(ci, ii, showCat) {
+    const it = data.categories[ci].items[ii];
+    const n = data.categories[ci].items.length;
+    const opts = data.categories.map((c, k) => `<option value="${k}" ${k === ci ? "selected" : ""}>${esc(c.name)}</option>`).join("");
+    return `
+    <div class="card ${it.hidden ? "off" : ""}" data-ci="${ci}" data-ii="${ii}">
+      ${showCat ? `<span class="tag">${esc(data.categories[ci].name)}</span>` : ""}
+      <div class="row">
+        <div class="thumb" data-act="img" title="تغيير الصورة">
+          ${it.image ? `<img src="${esc(imgSrc(it.image))}" alt="" onerror="this.style.display='none'" />` : "بدون صورة"}
+          <span>تغيير الصورة</span>
+        </div>
+        <div class="fields">
+          <div class="two">
+            <input type="text" data-f="name" value="${esc(it.name)}" placeholder="اسم الصنف" />
+            <input type="number" data-f="price" value="${Number.isFinite(it.price) ? it.price : ""}" step="0.05" min="0" inputmode="decimal" class="ltr" placeholder="السعر" />
+          </div>
+          <input type="text" data-f="subtitle" value="${esc(it.subtitle)}" placeholder="كلمة قبل الاسم (اختياري، مثل: ميلك شيك)" />
+        </div>
+      </div>
+      <textarea data-f="description" placeholder="وصف الصنف (اختياري)">${esc(it.description)}</textarea>
+      <details class="adv"><summary>كلمات بحث إضافية</summary>
+        <input type="text" data-f="keywords" value="${esc(it.keywords)}" placeholder="كلمات بتساعد الزبون يلاقي الصنف بالبحث" style="margin-top:6px" />
+      </details>
+      <div class="acts">
+        <button class="btn ghost sm" data-act="hide">${it.hidden ? "إظهار" : "إخفاء"}</button>
+        ${showCat ? "" : `<button class="btn ghost sm" data-act="up" ${ii === 0 ? "disabled" : ""}>▲</button>
+        <button class="btn ghost sm" data-act="down" ${ii === n - 1 ? "disabled" : ""}>▼</button>`}
+        <select data-act="move" title="نقل لتصنيف ثاني">${opts}</select>
+        <button class="btn danger sm" data-act="del" style="margin-inline-start:auto">حذف</button>
+      </div>
+    </div>`;
+  }
+
+  function renderList() {
+    const q = query.trim().toLowerCase();
+    let html = "";
+    if (q) {
+      data.categories.forEach((c, ci) => c.items.forEach((it, ii) => {
+        if ((it.name + " " + it.subtitle + " " + it.keywords).toLowerCase().includes(q)) html += cardHTML(ci, ii, true);
+      }));
+      if (!html) html = '<div class="empty" style="grid-column:1/-1">ما في نتائج</div>';
+    } else if (!data.categories.length) {
+      html = '<div class="empty" style="grid-column:1/-1">ما في تصنيفات. أضف تصنيف جديد للبدء.</div>';
+    } else {
+      const c = data.categories[activeCat];
+      html = c.items.map((_, ii) => cardHTML(activeCat, ii, false)).join("");
+      if (!html) html = '<div class="empty" style="grid-column:1/-1">التصنيف فاضي. اضغط "إضافة صنف".</div>';
+    }
+    $("#list").innerHTML = html;
+  }
+
+  function renderSettings() {
+    $$("[data-s]").forEach((i) => { i.value = data.settings[i.dataset.s] || ""; });
+  }
+
+  /* ---------------- events: tabs / categories ---------------- */
+  $$(".tab").forEach((b) => b.addEventListener("click", () => {
+    $$(".tab").forEach((x) => x.classList.toggle("on", x === b));
+    $("#tabItems").classList.toggle("hidden", b.dataset.tab !== "items");
+    $("#tabSettings").classList.toggle("hidden", b.dataset.tab !== "settings");
+  }));
+
+  $("#cats").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-cat]");
+    if (!b) return;
+    activeCat = +b.dataset.cat; query = ""; $("#q").value = "";
+    renderCats(); renderList();
+  });
+  $("#q").addEventListener("input", (e) => { query = e.target.value; renderCats(); renderList(); });
+
+  const cur = () => data.categories[activeCat];
+  $("#btnAddCat").onclick = () => {
+    const n = (prompt("اسم التصنيف الجديد:") || "").trim();
+    if (!n) return;
+    data.categories.push({ name: n, hidden: false, items: [] });
+    activeCat = data.categories.length - 1; query = ""; $("#q").value = "";
+    renderAll();
+  };
+  $("#btnRenCat").onclick = () => {
+    if (!cur()) return;
+    const n = (prompt("الاسم الجديد للتصنيف:", cur().name) || "").trim();
+    if (!n) return;
+    cur().name = n; renderAll();
+  };
+  $("#btnHideCat").onclick = () => { if (!cur()) return; cur().hidden = !cur().hidden; renderAll(); toast(cur().hidden ? "التصنيف مخفي عن الزباين" : "التصنيف ظاهر للزباين"); };
+  $("#btnCatL").onclick = () => { if (activeCat > 0) { const c = data.categories; [c[activeCat - 1], c[activeCat]] = [c[activeCat], c[activeCat - 1]]; activeCat--; renderAll(); } };
+  $("#btnCatR").onclick = () => { const c = data.categories; if (activeCat < c.length - 1) { [c[activeCat + 1], c[activeCat]] = [c[activeCat], c[activeCat + 1]]; activeCat++; renderAll(); } };
+  $("#btnDelCat").onclick = () => {
+    if (!cur()) return;
+    if (!confirm(`حذف التصنيف "${cur().name}" مع كل أصنافه (${cur().items.length})؟`)) return;
+    data.categories.splice(activeCat, 1); renderAll();
+  };
+
+  /* ---------------- events: items ---------------- */
+  $("#btnAddItem").onclick = () => {
+    if (!cur()) { toast("أضف تصنيف أول", "bad"); return; }
+    query = ""; $("#q").value = "";
+    cur().items.push({ id: "n" + Date.now().toString(36), name: "", subtitle: "", price: 0, description: "", image: "", keywords: "", hidden: false });
+    renderAll();
+    const cards = $$("#list .card"); const last = cards[cards.length - 1];
+    if (last) { last.scrollIntoView({ behavior: "smooth", block: "center" }); $("[data-f=name]", last).focus(); }
+  };
+
+  $("#list").addEventListener("input", (e) => {
+    const f = e.target.dataset.f; if (!f) return;
+    const card = e.target.closest(".card");
+    const it = data.categories[+card.dataset.ci].items[+card.dataset.ii];
+    it[f] = f === "price" ? parseFloat(e.target.value) : e.target.value;
+    refreshSaveBar();
+  });
+
+  $("#list").addEventListener("change", (e) => {
+    if (e.target.dataset.act !== "move") return;
+    const card = e.target.closest(".card");
+    const ci = +card.dataset.ci, ii = +card.dataset.ii, to = +e.target.value;
+    if (to === ci) return;
+    const [it] = data.categories[ci].items.splice(ii, 1);
+    data.categories[to].items.push(it);
+    toast("انتقل الصنف إلى: " + esc(data.categories[to].name), "ok", 2500);
+    renderAll();
+  });
+
+  $("#list").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-act]");
+    if (!b || b.tagName === "SELECT") return;
+    const card = b.closest(".card");
+    const ci = +card.dataset.ci, ii = +card.dataset.ii;
+    const items = data.categories[ci].items;
+    switch (b.dataset.act) {
+      case "img": pickTarget = { ci, ii }; $("#filePick").value = ""; $("#filePick").click(); return;
+      case "hide": items[ii].hidden = !items[ii].hidden; break;
+      case "up": if (ii > 0) [items[ii - 1], items[ii]] = [items[ii], items[ii - 1]]; break;
+      case "down": if (ii < items.length - 1) [items[ii + 1], items[ii]] = [items[ii], items[ii + 1]]; break;
+      case "del":
+        if (!confirm(`حذف "${items[ii].name || "هذا الصنف"}" نهائياً؟ (إذا بدك بس تخفيه استخدم زر إخفاء)`)) return;
+        items.splice(ii, 1); break;
+    }
+    renderAll();
+  });
+
+  /* ---------------- image upload (resize in browser) ---------------- */
+  function resizeImage(file, max = 900, quality = 0.82) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const r = Math.min(1, max / Math.max(img.width, img.height));
+        const w = Math.round(img.width * r), h = Math.round(img.height * r);
+        const cv = document.createElement("canvas");
+        cv.width = w; cv.height = h;
+        const ctx = cv.getContext("2d");
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, w, h);
+        URL.revokeObjectURL(url);
+        const dataUrl = cv.toDataURL("image/jpeg", quality);
+        resolve({ url: dataUrl, b64: dataUrl.split(",")[1] });
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("ما قدرت أقرأ الصورة")); };
+      img.src = url;
+    });
+  }
+
+  $("#filePick").addEventListener("change", async (e) => {
+    const f = e.target.files[0];
+    if (!f || !pickTarget) return;
+    try {
+      const out = await resizeImage(f);
+      const it = data.categories[pickTarget.ci].items[pickTarget.ii];
+      const path = `images/menu/uploads/${it.id}-${Date.now().toString(36)}.jpg`;
+      pending[path] = out;
+      it.image = path;
+      renderList(); refreshSaveBar();
+    } catch (err) { toast(esc(err.message), "bad"); }
+  });
+
+  /* ---------------- settings ---------------- */
+  $$("[data-s]").forEach((i) => i.addEventListener("input", () => { data.settings[i.dataset.s] = i.value.trim(); refreshSaveBar(); }));
+
+  $("#btnReload").onclick = async () => {
+    if (dirty() && !confirm("في تعديلات ما انحفظت. إذا أعدت التحميل رح تنمسح. متأكد؟")) return;
+    try { toast('<span class="spin"></span>جاري التحميل...', "", 0); await loadMenu(); renderAll(); toast("تم التحميل", "ok"); }
+    catch (e) { toast(esc(explain(e)), "bad"); }
+  };
+  $("#btnLogout").onclick = () => {
+    if (dirty() && !confirm("في تعديلات ما انحفظت. تسجيل الخروج رح يمسحها. متأكد؟")) return;
+    localStorage.removeItem(LS); cfg = null; data = null; showLogin();
+  };
+
+  /* ---------------- save (one commit) ---------------- */
+  function validate() {
+    const problems = [];
+    data.categories.forEach((c) => c.items.forEach((it, i) => {
+      if (!String(it.name).trim()) problems.push(`صنف بدون اسم في تصنيف "${c.name}" (رقم ${i + 1})`);
+      if (!Number.isFinite(it.price) || it.price < 0) problems.push(`سعر غير صحيح لـ "${it.name || "صنف بدون اسم"}"`);
+    }));
+    return problems;
+  }
+
+  async function save() {
+    const probs = validate();
+    if (probs.length) { toast(esc(probs.slice(0, 4).join("<br>")).replace(/&lt;br&gt;/g, "<br>"), "bad", 7000); return; }
+    saving = true; refreshSaveBar();
+    $("#btnSave").innerHTML = '<span class="spin"></span>جاري النشر...';
+    try {
+      // images still referenced
+      const used = new Set(data.categories.flatMap((c) => c.items.map((i) => i.image)));
+      const imgs = Object.entries(pending).filter(([p]) => used.has(p));
+
+      const ref = await (await gh("/git/ref/heads/" + cfg.branch)).json();
+      const headSha = ref.object.sha;
+      const commit = await (await gh("/git/commits/" + headSha)).json();
+
+      const entries = [];
+      for (const [p, o] of imgs) {
+        const blob = await (await gh("/git/blobs", { method: "POST", body: JSON.stringify({ content: o.b64, encoding: "base64" }) })).json();
+        entries.push({ path: sub() + p, mode: "100644", type: "blob", sha: blob.sha });
+      }
+      const jsonText = JSON.stringify(data, null, 1) + "\n";
+      const mb = await (await gh("/git/blobs", { method: "POST", body: JSON.stringify({ content: jsonText, encoding: "utf-8" }) })).json();
+      entries.push({ path: sub() + "menu.json", mode: "100644", type: "blob", sha: mb.sha });
+
+      const tree = await (await gh("/git/trees", { method: "POST", body: JSON.stringify({ base_tree: commit.tree.sha, tree: entries }) })).json();
+      const nc = await (await gh("/git/commits", { method: "POST", body: JSON.stringify({ message: "تحديث المنيو من لوحة التحكم", tree: tree.sha, parents: [headSha] }) })).json();
+      await gh("/git/refs/heads/" + cfg.branch, { method: "PATCH", body: JSON.stringify({ sha: nc.sha }) });
+
+      baseline = JSON.stringify(data);
+      pending = {};
+      toast("تم النشر ✔ التعديلات بتظهر للزباين خلال دقيقة تقريباً (لما الموقع يخلص تحديث).", "ok", 9000);
+    } catch (e) {
+      toast(esc(explain(e)), "bad", 9000);
+    } finally {
+      saving = false;
+      $("#btnSave").textContent = "نشر التعديلات";
+      refreshSaveBar();
+    }
+  }
+  $("#btnSave").onclick = save;
+  $("#btnLogin").onclick = doLogin;
+  ["inRepo", "inToken", "inBranch", "inSub"].forEach((id) => $("#" + id).addEventListener("keydown", (e) => { if (e.key === "Enter") doLogin(); }));
+
+  /* ---------------- boot ---------------- */
+  (async function init() {
+    const saved = JSON.parse(localStorage.getItem(LS) || "null");
+    if (saved && saved.repo && saved.token) {
+      cfg = saved;
+      try { await loadMenu(); enterApp(); return; }
+      catch (e) { cfg = null; showLogin(explain(e)); return; }
+    }
+    showLogin();
+  })();
+})();
+</script>
+</body>
+</html>

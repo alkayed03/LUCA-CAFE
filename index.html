@@ -16,7 +16,39 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="assets/index-Mk2Ls9Qf.js"></script>
+    <script type="module">
+      (async () => {
+        try {
+          const r = await fetch("menu.json?v=" + Date.now(), { cache: "no-store" });
+          if (r.ok) {
+            const d = await r.json();
+            const cats = (d.categories || [])
+              .filter((c) => !c.hidden)
+              .map((c) => ({
+                name: c.name,
+                items: (c.items || [])
+                  .filter((i) => !i.hidden)
+                  .map((i) => ({
+                    id: String(i.id),
+                    name: i.name || "",
+                    subtitle: i.subtitle || "",
+                    price: Number(i.price) || 0,
+                    description: i.description || "",
+                    image: i.image || "",
+                    category: c.name,
+                    searchText: ((i.name || "") + " " + (i.subtitle || "") + " " + (i.keywords || "")).toLowerCase(),
+                  })),
+              }))
+              .filter((c) => c.items.length > 0);
+            if (cats.length) window.__MENU__ = cats;
+            const st = {};
+            Object.entries(d.settings || {}).forEach(([k, v]) => { if (v) st[k] = v; });
+            window.__SETTINGS__ = st;
+          }
+        } catch (e) { console.warn("menu.json not loaded, using built-in menu", e); }
+        await import("./assets/index-Mk2Ls9Qf.js");
+      })();
+    </script>
     <link rel="stylesheet" crossorigin href="assets/index-CH42MeeG.css">
   </head>
   <body>
