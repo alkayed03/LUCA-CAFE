@@ -52,6 +52,11 @@ input::placeholder{color:#7d6a5b}input:focus{border-color:var(--gold);outline:no
 .pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;direction:ltr;margin:14px 0 2px}.pad button{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:14px 0;font-size:24px;font-weight:500}.pad button:active,.stp button:active{background:var(--sf2)}
 .stp{display:grid;grid-template-columns:64px 1fr 64px;gap:8px;margin:18px 0 2px}.stp button{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:14px 0;font-size:24px}.stp .mx{font-size:15px;color:var(--gold)}
 .seg{margin:14px 0 0}.pv{margin-top:6px}
+.seg{grid-template-columns:repeat(3,1fr)}
+.rl{display:flex;align-items:center;gap:12px;background:var(--sf2);border:1px solid var(--ln);border-radius:16px;padding:12px 14px;margin-top:10px}
+.rl .i{flex:1;min-width:0}.rl b{display:block;font-size:17px}.rl small{color:var(--mu)}
+.rl button{background:var(--gold);color:#2a1a08;font-weight:700;border-radius:12px;padding:10px 14px}.rl button:disabled{background:var(--sf);color:#7d6a5b}
+.emp{text-align:center;color:var(--mu);padding:26px 0}
 
 </style></head><body><div class="w">
 
@@ -73,7 +78,7 @@ input::placeholder{color:#7d6a5b}input:focus{border-color:var(--gold);outline:no
  <div class="card hd"><div class="av" id="av"></div><div class="nm"><b id="cn"></b><small id="cp"></small></div>
   <div class="pc"><strong id="cpts">0</strong><span>نقطة</span></div></div>
  <div class="worth" id="worth"></div>
- <div class="seg"><button class="on" data-t="add">مشتريات جديدة</button><button data-t="use">استبدال بخصم</button></div>
+ <div class="seg"><button class="on" data-t="add">مشتريات جديدة</button><button data-t="use">خصم</button><button data-t="rew" id="tabRew">جوائز</button></div>
  <div id="tAdd">
   <div class="disp"><span id="aShow">0</span><em>د.أ</em></div><div class="pv" id="pa"></div>
   <div class="pad" id="pad"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button><button>.</button><button>0</button><button data-k="b">⌫</button></div>
@@ -84,6 +89,7 @@ input::placeholder{color:#7d6a5b}input:focus{border-color:var(--gold);outline:no
   <div class="stp"><button data-r="-20" aria-label="أنقص 20">−</button><button class="mx" data-r="max">الحد الأقصى</button><button data-r="20" aria-label="زد 20">+</button></div>
   <button class="pri" id="use" disabled>تأكيد الخصم</button>
  </div>
+ <div id="tRew" class="hid"><div id="rlist"></div></div>
  <button class="gh nx" id="next">زبون جديد</button>
 </div>
 </div><div class="toast hid" id="t"></div></div>
@@ -98,6 +104,8 @@ const auth=getAuth(app),db=getFirestore(app),$=s=>document.querySelector(s),$$=s
 /* === الإعدادات: لازم تطابق صفحة الزبون === */
 const POINTS_PER_JD=1;        // كل دينار = 1 نقطة
 const PTS_PER_DISCOUNT_JD=20; // كل 20 نقطة = 1 دينار خصم
+const EXP=30*60*1000; // لازم يطابق صفحة الزبون
+const REWARDS={coffee:{n:"فنجان قهوة",p:20},juice:{n:"عصير فريش",p:40},mojito:{n:"موهيتو",p:60},latte:{n:"لاتيه بارد",p:80},hookah:{n:"أرجيلة",p:100}};
 let amtS="",redN=0,uid=null,cur=0,scanner=null,busy=false;
 const toast=m=>{const t=$("#t");t.textContent=m;t.classList.remove("hid");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.add("hid"),3500)};
 const norm=p=>{p=p.replace(/\D/g,"");if(p.startsWith("00"))p=p.slice(2);if(p.startsWith("0"))p="962"+p.slice(1);return p};
@@ -106,18 +114,18 @@ $("#pw").onkeydown=e=>{if(e.key==="Enter")$("#in").click()};
 $("#out").onclick=()=>{stopCam();signOut(auth)};
 onAuthStateChanged(auth,u=>{$("#login").classList.toggle("hid",!!u);$("#app").classList.toggle("hid",!u)});
 async function startCam(){try{if(!scanner)scanner=new Html5Qrcode("reader");
- await scanner.start({facingMode:"environment"},{fps:10,qrbox:{width:230,height:230}},t=>{if(t.startsWith("LUCA:"))load(t.slice(5))});$("#ph0").classList.add("hid")}
+ await scanner.start({facingMode:"environment"},{fps:10,qrbox:{width:230,height:230}},t=>{if(t.startsWith("LUCAR:"))load(t.split(":")[1],true);else if(t.startsWith("LUCA:"))load(t.slice(5))});$("#ph0").classList.add("hid")}
  catch{$("#err").textContent="ما اشتغلت الكاميرا. اسمح للمتصفح باستخدامها أو ابحث برقم الموبايل."}}
 function stopCam(){if(scanner&&scanner.isScanning)return scanner.stop().then(()=>$("#ph0").classList.remove("hid")).catch(()=>{})}
 $("#cam").onclick=startCam;
-async function load(id){if(busy)return;busy=true;$("#err").textContent="";
- try{const s=await getDoc(doc(db,"customers",id));if(!s.exists()){$("#err").textContent="هذا الكود مش مسجل عندنا";return}show(id,s.data())}
+async function load(id,rew){if(busy)return;busy=true;$("#err").textContent="";
+ try{const s=await getDoc(doc(db,"customers",id));if(!s.exists()){$("#err").textContent="هذا الكود مش مسجل عندنا";return}show(id,s.data(),rew)}
  catch{$("#err").textContent="ما قدرت أقرأ الحساب. تأكد إنك داخل بحساب الكاشير."}finally{busy=false}}
-function show(id,d){uid=id;cur=d.points;stopCam();$("#scanBox").classList.add("hid");$("#cus").classList.remove("hid");
- $("#cn").textContent=d.name;$("#av").textContent=d.name.trim().charAt(0);$("#cp").textContent="0"+d.phone.slice(3);$("#cpts").textContent=d.points;tab("add");calc()}
+function show(id,d,rew){uid=id;cur=d.points;stopCam();$("#scanBox").classList.add("hid");$("#cus").classList.remove("hid");
+ $("#cn").textContent=d.name;$("#av").textContent=d.name.trim().charAt(0);$("#cp").textContent="0"+d.phone.slice(3);$("#cpts").textContent=d.points;tab(rew?"rew":"add");calc();loadRew()}
 $("#find").onclick=async()=>{$("#err").textContent="";const p=norm($("#ph").value);if(!p)return;
  try{const s=await getDocs(query(collection(db,"customers"),where("phone","==",p)));s.empty?$("#err").textContent="ما لقيت زبون بهالرقم":show(s.docs[0].id,s.docs[0].data())}catch{$("#err").textContent="صار خطأ بالبحث، جرب مرة ثانية"}};
-function tab(t){$$(".seg button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));$("#tAdd").classList.toggle("hid",t!=="add");$("#tUse").classList.toggle("hid",t!=="use")}
+function tab(t){$$(".seg button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));$("#tAdd").classList.toggle("hid",t!=="add");$("#tUse").classList.toggle("hid",t!=="use");$("#tRew").classList.toggle("hid",t!=="rew")}
 $$(".seg button").forEach(b=>b.onclick=()=>tab(b.dataset.t));
 function calc(){const a=parseFloat(amtS)||0,pts=Math.floor(a*POINTS_PER_JD);$("#aShow").textContent=amtS||"0";
  $("#pa").textContent=pts>0?`+${pts} نقطة`:"اكتب مبلغ الفاتورة";$("#pa").className="pv"+(pts>0?" ok":"");$("#add").disabled=pts<1;
@@ -130,6 +138,23 @@ $$("#pad button").forEach(b=>b.onclick=()=>{const k=b.dataset.k||b.textContent;
  else if(amtS.length<7&&!/\.\d\d$/.test(amtS))amtS=(amtS==="0"?"":amtS)+k;calc()});
 $$("[data-r]").forEach(b=>b.onclick=()=>{const mx=Math.floor(cur/PTS_PER_DISCOUNT_JD)*PTS_PER_DISCOUNT_JD,v=b.dataset.r;
  redN=v==="max"?mx:Math.max(0,Math.min(mx,redN+ +v));calc()});
+async function loadRew(){const box=$("#rlist");if(!uid)return;
+ try{const s=await getDocs(query(collection(db,"customers",uid,"redeems"),where("status","==","pending")));
+  const now=Date.now(),rows=s.docs.map(x=>({id:x.id,...x.data()})).filter(d=>REWARDS[d.rewardId]&&(!d.createdAt||now-d.createdAt.toMillis()<EXP));
+  $("#tabRew").textContent=rows.length?`جوائز (${rows.length})`:"جوائز";
+  box.innerHTML=rows.length?rows.map(d=>{const r=REWARDS[d.rewardId],ok=cur>=r.p,m=d.createdAt?Math.max(0,Math.round((now-d.createdAt.toMillis())/60000)):0;
+   return`<div class="rl"><div class="i"><b>${r.n}</b><small>${r.p} نقطة · قبل ${m} د${ok?"":" · الرصيد ما بكفي"}</small></div><button data-id="${d.id}" ${ok?"":"disabled"}>تأكيد التسليم</button></div>`}).join(""):'<div class="emp">ما في طلبات استبدال حالياً</div>';
+  box.querySelectorAll("button[data-id]").forEach(b=>b.onclick=()=>giveReward(b.dataset.id))}
+ catch{box.innerHTML='<div class="emp">ما قدرت أقرأ الطلبات</div>'}}
+async function giveReward(rid){const cr=doc(db,"customers",uid),rr=doc(db,"customers",uid,"redeems",rid);$$("#rlist button").forEach(b=>b.disabled=true);
+ try{const out=await runTransaction(db,async tx=>{const c=await tx.get(cr),r=await tx.get(rr);if(!r.exists())throw new Error("gone");const d=r.data(),rw=REWARDS[d.rewardId];
+   if(d.status!=="pending"||!rw)throw new Error("used");if(d.createdAt&&Date.now()-d.createdAt.toMillis()>EXP)throw new Error("exp");
+   const p=c.data().points-rw.p;if(p<0)throw new Error("neg");
+   tx.update(cr,{points:p});tx.update(rr,{status:"used",usedAt:serverTimestamp(),by:auth.currentUser.email});
+   tx.set(doc(collection(db,"customers",uid,"log")),{type:"reward",reward:rw.n,points:-rw.p,at:serverTimestamp(),by:auth.currentUser.email});return{p,n:rw.n}});
+  cur=out.p;$("#cpts").textContent=out.p;calc();toast("تم تسليم "+out.n+" ✓ الرصيد: "+out.p)}
+ catch(e){toast({neg:"الرصيد ما بكفي",exp:"انتهت صلاحية الكود",used:"هذا الطلب انستخدم قبل",gone:"الزبون ألغى الطلب"}[e.message]||"فشلت العملية، جرب مرة ثانية")}
+ loadRew()}
 async function apply(delta,extra){const ref=doc(db,"customers",uid);$("#add").disabled=$("#use").disabled=true;
  try{const n=await runTransaction(db,async tx=>{const s=await tx.get(ref),p=s.data().points+delta;if(p<0)throw new Error("neg");
   tx.update(ref,{points:p});tx.set(doc(collection(db,"customers",uid,"log")),{points:delta,at:serverTimestamp(),by:auth.currentUser.email,...extra});return p});

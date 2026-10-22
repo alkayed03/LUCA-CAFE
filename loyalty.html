@@ -13,6 +13,22 @@ button.g{background:none;color:var(--brand);border:1px solid var(--line)}.err{co
 #qr{width:230px;margin:10px auto;background:#fff;padding:6px;border-radius:12px;border:1px solid var(--line)}#qr svg{display:block;width:100%;height:auto}
 .note{background:#efe3d3;border-radius:10px;padding:10px;text-align:center;font-size:14px}
 ul{list-style:none;padding:0;margin:8px 0;font-size:14px}li{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)}
+.rw{margin:18px 0 4px}.rw h3{margin:0 0 4px;font-size:16px}
+.bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 6px}.bar i{display:block;height:100%;width:0;background:var(--acc);border-radius:6px;transition:width .4s}
+.rs{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.rc{flex:0 0 156px;scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 8px 12px;text-align:center;box-shadow:0 2px 8px rgba(43,29,20,.06);cursor:pointer}
+.ring{width:100px;height:100px;margin:0 auto 10px;border-radius:50%;padding:4px;background:linear-gradient(135deg,#e3b565,#b8672f)}
+.ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;border:3px solid #fff;background:#eee}
+.rc.lk .ring{background:#d9cfc4}.rc.lk img{filter:grayscale(.7) opacity(.75)}
+.rc b{display:block;font-size:15px;margin:2px 0 10px;min-height:22px}
+.pill{display:inline-flex;align-items:center;gap:5px;border:2px solid var(--mut);color:var(--mut);border-radius:999px;padding:3px 14px;font-weight:700;font-size:14px}
+.pill svg{width:13px;height:13px}
+.rc button{margin-top:0;padding:9px;font-size:14px}.rc button.w{background:var(--acc)}
+.sh{position:fixed;inset:0;background:rgba(30,18,10,.55);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.sh>div{background:var(--card);width:100%;max-width:420px;border-radius:24px 24px 0 0;padding:22px 22px calc(22px + env(safe-area-inset-bottom));text-align:center;max-height:92vh;overflow:auto}
+.sh .ring{width:110px;height:110px}.sh h2{margin:6px 0 2px;font-size:20px}.sh p{margin:4px 0 8px;color:var(--mut);font-size:14px}
+.sh #sq{width:220px;margin:10px auto;background:#fff;padding:8px;border-radius:14px;border:1px solid var(--line)}.sh #sq svg{display:block;width:100%;height:auto}
+.okk{font-size:54px;color:#2f7d4f;line-height:1;margin:6px 0}
 .p{color:#2f7d4f}.m{color:#b3372c}small{color:var(--mut)}
 </style></head><body>
 <div class="c" id="auth"><img class="l" src="images/luca-logo.png" alt="LUCA"><h1>نقاط لوكا</h1>
@@ -20,18 +36,44 @@ ul{list-style:none;padding:0;margin:8px 0;font-size:14px}li{display:flex;justify
 <input id="phone" type="tel" placeholder="رقم الموبايل 07XXXXXXXX"><input id="pass" type="password" placeholder="كلمة السر (6 أحرف على الأقل)">
 <button id="go">دخول</button><button class="g" id="sw">ما عندي حساب؟ سجّل جديد</button><div class="err" id="err"></div></div>
 <div class="c hid" id="acc"><img class="l" src="images/luca-logo.png" alt="LUCA"><h1 id="hi"></h1>
-<div class="pts"><b id="pts">0</b>نقطة</div><div class="note" id="worth"></div>
-<div id="qr"></div><p style="text-align:center;font-size:13px;color:var(--mut)">أعرض الكود للكاشير عند الدفع</p>
+<div class="pts"><b id="pts">0</b>نقطة</div><div id="qr"></div><p style="text-align:center;font-size:13px;color:var(--mut)">أعرض الكود للكاشير عند الدفع</p>
+<div class="rw"><h3>المكافآت 🎁</h3><div class="bar"><i id="bar"></i></div><p id="nxt" style="text-align:center;font-size:13px;color:var(--mut);margin:0 0 6px"></p><div class="rs" id="rw"></div></div>
 <h3 style="margin:16px 0 0;font-size:15px">آخر العمليات</h3><ul id="log"></ul>
 <button class="g" id="out">تسجيل خروج</button><button class="g" onclick="location.href='./'">رجوع للمنيو</button></div>
+<div class="sh hid" id="sh"><div id="shc"></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import{getFirestore,doc,setDoc,onSnapshot,collection,query,orderBy,limit,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import{getFirestore,doc,setDoc,onSnapshot,collection,query,orderBy,limit,where,addDoc,deleteDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 const app=initializeApp({apiKey:"AIzaSyAbfu5_nrZ2E_06eNYeYk7RL0SwLtzhCTk",authDomain:"luca-cafe.firebaseapp.com",projectId:"luca-cafe",appId:"1:576729730989:web:80ea8d4395c1de91189b24"});
 const auth=getAuth(app),db=getFirestore(app),$=s=>document.querySelector(s);
-const PTS_PER_JD_DISCOUNT=20; // لازم يطابق الرقم بصفحة الكاشير: كل 20 نقطة = 1 دينار خصم
+const LOCK='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zm-7-2a2 2 0 0 1 4 0v2h-4z"/></svg>';
+const EXP=30*60*1000; // صلاحية كود الاستبدال 30 دقيقة
+const REWARDS=[{id:"coffee",p:20,n:"فنجان قهوة",img:"images/menu/hot-drinks/luca-coffee-1.jpg"},{id:"juice",p:40,n:"عصير فريش",img:"images/menu/juices-and-smoothies/orange-1.jpg"},{id:"mojito",p:60,n:"موهيتو",img:"images/menu/mocktails/mojito-6.jpg"},{id:"latte",p:80,n:"لاتيه بارد",img:"images/menu/cold-drinks/iced-latte-4.jpg"},{id:"hookah",p:100,n:"أرجيلة",img:"images/menu/shisha/luca-shisha-1.jpg"}];
+let me=null,pts=0,pend={},sUnsub=null;
+function showRewards(){const nx=REWARDS.find(r=>pts<r.p),top=REWARDS[REWARDS.length-1].p;
+ $("#bar").style.width=Math.min(100,pts/top*100)+"%";
+ $("#nxt").textContent=nx?`باقيلك ${nx.p-pts} نقطة لـ ${nx.n}`:"وصلت لأعلى مكافأة 🎉";
+ $("#rw").innerHTML=REWARDS.map(r=>{const ok=pts>=r.p,pd=pend[r.id];
+  return`<div class="rc${ok||pd?"":" lk"}" data-id="${r.id}"><div class="ring"><img src="${r.img}" alt="${r.n}" loading="lazy"></div><b>${r.n}</b>`+
+  (pd?`<button class="w">عرض الكود</button>`:ok?`<button>استبدل ${r.p} نقطة</button>`:`<span class="pill">${LOCK}${r.p} نقطة</span>`)+`</div>`}).join("")}
+function closeSheet(){if(sUnsub){sUnsub();sUnsub=null}$("#sh").classList.add("hid")}
+function sheet(h){$("#shc").innerHTML=h;$("#sh").classList.remove("hid")}
+$("#sh").onclick=e=>{if(e.target.id==="sh")closeSheet()};
+$("#rw").onclick=e=>{const c=e.target.closest(".rc");if(!c)return;const r=REWARDS.find(x=>x.id===c.dataset.id);
+ if(pend[r.id])return showCode(r,pend[r.id]);
+ if(pts<r.p){$("#nxt").textContent=`باقيلك ${r.p-pts} نقطة لـ ${r.n}`;return}
+ sheet(`<div class="ring"><img src="${r.img}" alt=""></div><h2>${r.n}</h2><p>رح يتم خصم ${r.p} نقطة لما الكاشير يمسح الكود</p><button id="cf">استبدل الآن</button><button class="g" id="cl">إلغاء</button>`);
+ $("#cl").onclick=closeSheet;
+ $("#cf").onclick=async()=>{$("#cf").disabled=true;try{const ref=await addDoc(collection(db,"customers",me,"redeems"),{rewardId:r.id,reward:r.n,points:r.p,status:"pending",createdAt:serverTimestamp()});showCode(r,ref.id)}
+  catch{$("#cf").disabled=false;$("#cf").textContent="صار خطأ، جرب مرة ثانية"}}};
+function showCode(r,rid){const qr=qrcode(0,"M");qr.addData("LUCAR:"+me+":"+rid);qr.make();
+ sheet(`<div class="ring"><img src="${r.img}" alt=""></div><h2>${r.n}</h2><p>اعرض الكود للكاشير لاستلام مكافأتك</p><div id="sq">${qr.createSvgTag({cellSize:6,margin:2,scalable:true})}</div><p style="font-size:12px">الكود صالح 30 دقيقة</p><button class="g" id="cx">إلغاء الاستبدال</button><button class="g" id="cl">إغلاق</button>`);
+ $("#cl").onclick=closeSheet;$("#cx").onclick=async()=>{try{await deleteDoc(doc(db,"customers",me,"redeems",rid))}catch{}closeSheet()};
+ if(sUnsub)sUnsub();
+ sUnsub=onSnapshot(doc(db,"customers",me,"redeems",rid),s=>{const d=s.data();if(!s.exists()){closeSheet();return}
+  if(d.status==="used"){sheet(`<div class="okk">✓</div><h2>تم الاستبدال</h2><p>بالهنا والشفا! استمتع بـ ${r.n} 🎉</p><button id="cl">تمام</button>`);$("#cl").onclick=closeSheet;if(sUnsub){sUnsub();sUnsub=null}}})}
 let reg=false,unsub=[];
 const norm=p=>{p=p.replace(/\D/g,"");if(p.startsWith("00"))p=p.slice(2);if(p.startsWith("0"))p="962"+p.slice(1);return p};
 const mail=p=>norm(p)+"@luca-loyalty.app";
@@ -44,11 +86,11 @@ $("#go").onclick=async()=>{const e=$("#err");e.textContent="";const ph=$("#phone
  else await signInWithEmailAndPassword(auth,mail(ph),pw)}
  catch(x){const c=x.code||"";e.textContent=/email-already/.test(c)?"هذا الرقم مسجل، اضغط دخول":/invalid-cred|wrong-pass|user-not/.test(c)?"الرقم أو كلمة السر غلط":/weak/.test(c)?"كلمة السر ضعيفة (6 أحرف على الأقل)":"صار خطأ، جرب مرة ثانية"}};
 $("#out").onclick=()=>signOut(auth);
-onAuthStateChanged(auth,u=>{unsub.forEach(f=>f());unsub=[];$("#auth").classList.toggle("hid",!!u);$("#acc").classList.toggle("hid",!u);if(!u)return;
+onAuthStateChanged(auth,u=>{unsub.forEach(f=>f());unsub=[];$("#auth").classList.toggle("hid",!!u);$("#acc").classList.toggle("hid",!u);if(!u){me=null;pend={};closeSheet();return}me=u.uid;
  const qr=qrcode(0,"M");qr.addData("LUCA:"+u.uid);qr.make();$("#qr").innerHTML=qr.createSvgTag({cellSize:6,margin:2,scalable:true});
- unsub.push(onSnapshot(doc(db,"customers",u.uid),s=>{const d=s.data();if(!d)return;$("#hi").textContent="أهلاً "+d.name;$("#pts").textContent=d.points;
-  const dsc=Math.floor(d.points/PTS_PER_JD_DISCOUNT);$("#worth").textContent=dsc>0?`نقاطك بتعطيك خصم ${dsc} دينار 🎉`:`باقيلك ${PTS_PER_JD_DISCOUNT-d.points} نقطة لأول خصم`}));
+ unsub.push(onSnapshot(doc(db,"customers",u.uid),s=>{const d=s.data();if(!d)return;$("#hi").textContent="أهلاً "+d.name;$("#pts").textContent=d.points;pts=d.points;showRewards()}));
+ unsub.push(onSnapshot(query(collection(db,"customers",u.uid,"redeems"),where("status","==","pending")),s=>{pend={};s.docs.forEach(x=>{const d=x.data(),t=d.createdAt?d.createdAt.toMillis():Date.now();if(Date.now()-t<EXP)pend[d.rewardId]=x.id});showRewards()}));
  unsub.push(onSnapshot(query(collection(db,"customers",u.uid,"log"),orderBy("at","desc"),limit(10)),s=>{
   $("#log").innerHTML=s.docs.map(x=>{const d=x.data(),a=d.at?d.at.toDate().toLocaleDateString("ar-JO"):"";
-   return`<li><span>${d.type==="earn"?"مشتريات "+d.amount+" د":"استبدال خصم "+d.discount+" د"}<br><small>${a}</small></span><b class="${d.points>0?"p":"m"}">${d.points>0?"+":""}${d.points}</b></li>`}).join("")||"<li><small>ما في عمليات لسا</small></li>"}))});
+   return`<li><span>${d.type==="earn"?"مشتريات "+d.amount+" د":d.type==="reward"?"استبدال "+d.reward:"استبدال خصم "+d.discount+" د"}<br><small>${a}</small></span><b class="${d.points>0?"p":"m"}">${d.points>0?"+":""}${d.points}</b></li>`}).join("")||"<li><small>ما في عمليات لسا</small></li>"}))});
 </script></body></html>
