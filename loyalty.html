@@ -9,7 +9,7 @@
 input{width:100%;padding:11px 12px;margin:6px 0;border:1px solid var(--line);border-radius:10px;font:inherit;direction:ltr;text-align:right}
 button{width:100%;border:0;border-radius:10px;padding:11px;margin-top:10px;background:var(--brand);color:#fff;font:inherit;font-weight:600;cursor:pointer}
 button.g{background:none;color:var(--brand);border:1px solid var(--line)}.err{color:#b3372c;font-size:14px;margin-top:8px;min-height:18px}
-.hid{display:none}.pts{text-align:center;margin:8px 0}.pts b{font-size:48px;color:var(--acc);display:block;line-height:1.1}
+.hid{display:none!important}.pts{text-align:center;margin:8px 0}.pts b{font-size:48px;color:var(--acc);display:block;line-height:1.1}
 #qr{width:230px;margin:10px auto;background:#fff;padding:6px;border-radius:12px;border:1px solid var(--line)}#qr svg{display:block;width:100%;height:auto}
 .note{background:#efe3d3;border-radius:10px;padding:10px;text-align:center;font-size:14px}
 ul{list-style:none;padding:0;margin:8px 0;font-size:14px}li{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)}
@@ -25,7 +25,7 @@ ul{list-style:none;padding:0;margin:8px 0;font-size:14px}li{display:flex;justify
 .pill svg{width:13px;height:13px}
 .rc button{margin-top:0;padding:9px;font-size:14px}.rc button.w{background:var(--acc)}
 .sh{position:fixed;inset:0;background:rgba(30,18,10,.55);display:flex;align-items:flex-end;justify-content:center;z-index:20}
-.sh.hid{display:none}
+.sh.hid{display:none!important}
 .sh>div{background:var(--card);width:100%;max-width:420px;border-radius:24px 24px 0 0;padding:22px 22px calc(22px + env(safe-area-inset-bottom));text-align:center;max-height:92vh;overflow:auto}
 .sh .ring{width:110px;height:110px}.sh h2{margin:6px 0 2px;font-size:20px}.sh p{margin:4px 0 8px;color:var(--mut);font-size:14px}
 .sh #sq{width:220px;margin:10px auto;background:#fff;padding:8px;border-radius:14px;border:1px solid var(--line)}.sh #sq svg{display:block;width:100%;height:auto}
@@ -75,6 +75,7 @@ function showCode(r,rid){const qr=qrcode(0,"M");qr.addData("LUCAR:"+me+":"+rid);
  if(sUnsub)sUnsub();
  sUnsub=onSnapshot(doc(db,"customers",me,"redeems",rid),s=>{const d=s.data();if(!s.exists()){closeSheet();return}
   if(d.status==="used"){sheet(`<div class="okk">✓</div><h2>تم الاستبدال</h2><p>بالهنا والشفا! استمتع بـ ${r.n} 🎉</p><button id="cl">تمام</button>`);$("#cl").onclick=closeSheet;if(sUnsub){sUnsub();sUnsub=null}}})}
+closeSheet();
 let reg=false,unsub=[];
 const norm=p=>{p=p.replace(/\D/g,"");if(p.startsWith("00"))p=p.slice(2);if(p.startsWith("0"))p="962"+p.slice(1);return p};
 const mail=p=>norm(p)+"@luca-loyalty.app";
@@ -87,7 +88,7 @@ $("#go").onclick=async()=>{const e=$("#err");e.textContent="";const ph=$("#phone
  else await signInWithEmailAndPassword(auth,mail(ph),pw)}
  catch(x){const c=x.code||"";e.textContent=/email-already/.test(c)?"هذا الرقم مسجل، اضغط دخول":/invalid-cred|wrong-pass|user-not/.test(c)?"الرقم أو كلمة السر غلط":/weak/.test(c)?"كلمة السر ضعيفة (6 أحرف على الأقل)":"صار خطأ، جرب مرة ثانية"}};
 $("#out").onclick=()=>signOut(auth);
-onAuthStateChanged(auth,u=>{unsub.forEach(f=>f());unsub=[];$("#auth").classList.toggle("hid",!!u);$("#acc").classList.toggle("hid",!u);if(!u){me=null;pend={};closeSheet();return}me=u.uid;
+onAuthStateChanged(auth,u=>{unsub.forEach(f=>f());unsub=[];$("#auth").classList.toggle("hid",!!u);$("#acc").classList.toggle("hid",!u);if(!u){me=null;pend={};closeSheet();return}me=u.uid;closeSheet();
  const qr=qrcode(0,"M");qr.addData("LUCA:"+u.uid);qr.make();$("#qr").innerHTML=qr.createSvgTag({cellSize:6,margin:2,scalable:true});
  unsub.push(onSnapshot(doc(db,"customers",u.uid),s=>{const d=s.data();if(!d)return;$("#hi").textContent="أهلاً "+d.name;$("#pts").textContent=d.points;pts=d.points;showRewards()}));
  unsub.push(onSnapshot(query(collection(db,"customers",u.uid,"redeems"),where("status","==","pending")),s=>{pend={};s.docs.forEach(x=>{const d=x.data(),t=d.createdAt?d.createdAt.toMillis():Date.now();if(Date.now()-t<EXP)pend[d.rewardId]=x.id});showRewards()}));
