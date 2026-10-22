@@ -110,7 +110,20 @@ const REWARDS={coffee:{n:"فنجان قهوة",p:20},juice:{n:"عصير فريش
 const SHEET_URL="https://script.google.com/macros/s/AKfycbwMKuUGNWDK0TshV9VaMCYgEymconAea1iAPAegZjM99bRd4b0pSHPPeFJU0DlSwr1idA/exec";            // مثال: https://script.google.com/macros/s/XXXX/exec
 const SHEET_KEY="2021LUCA"; // لازم تطابق KEY بسكربت الشيت
 let amtS="",redN=0,uid=null,cur=0,scanner=null,busy=false,cname="",cphone="";
-function logSheet(r){if(!SHEET_URL)return;try{fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({key:SHEET_KEY,cashier:auth.currentUser.email,customer:cname,phone:cphone,...r})}).catch(()=>{})}catch{}}
+async function logSheet(r){
+  if(!SHEET_URL){console.error("Google Sheets: SHEET_URL is empty");return false;}
+  const user=auth.currentUser;
+  if(!user){console.error("Google Sheets: cashier is not signed in");return false;}
+  const payload={key:SHEET_KEY,cashier:user.email||"unknown",customer:cname,phone:cphone,...r};
+  try{
+    // Apps Script web apps generally require no-cors from a static site.
+    // In no-cors mode the browser cannot read the server response, so this only
+    // confirms that the browser accepted/sent the request, not that Sheets saved it.
+    await fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload),keepalive:true});
+    console.info("Google Sheets request sent (response cannot be verified in no-cors mode)", {type:r.type, customer:cname});
+    return true;
+  }catch(err){console.error("Google Sheets send failed",err);return false;}
+}
 const toast=m=>{const t=$("#t");t.textContent=m;t.classList.remove("hid");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.add("hid"),3500)};
 const norm=p=>{p=p.replace(/\D/g,"");if(p.startsWith("00"))p=p.slice(2);if(p.startsWith("0"))p="962"+p.slice(1);return p};
 $("#in").onclick=async()=>{$("#le").textContent="";try{await signInWithEmailAndPassword(auth,$("#em").value,$("#pw").value)}catch{$("#le").textContent="الإيميل أو كلمة السر غلط"}};
