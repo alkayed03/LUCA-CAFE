@@ -108,7 +108,7 @@ const EXP=30*60*1000; // لازم يطابق صفحة الزبون
 const REWARDS={coffee:{n:"فنجان قهوة",p:20},juice:{n:"عصير فريش",p:40},mojito:{n:"موهيتو",p:60},latte:{n:"لاتيه بارد",p:80},hookah:{n:"أرجيلة",p:100}};
 /* === ربط Google Sheet: الصق رابط الـ Web App هون === */
 const SHEET_URL="https://script.google.com/macros/s/AKfycbwMKuUGNWDK0TshV9VaMCYgEymconAea1iAPAegZjM99bRd4b0pSHPPeFJU0DlSwr1idA/exec";            // مثال: https://script.google.com/macros/s/XXXX/exec
-const SHEET_KEY="luca-2026-xyz"; // لازم تطابق KEY بسكربت الشيت
+const SHEET_KEY="2021LUCA"; // لازم تطابق KEY بسكربت الشيت
 let amtS="",redN=0,uid=null,cur=0,scanner=null,busy=false,cname="",cphone="";
 function logSheet(r){if(!SHEET_URL)return;try{fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({key:SHEET_KEY,cashier:auth.currentUser.email,customer:cname,phone:cphone,...r})}).catch(()=>{})}catch{}}
 const toast=m=>{const t=$("#t");t.textContent=m;t.classList.remove("hid");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.add("hid"),3500)};
