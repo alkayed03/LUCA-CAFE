@@ -153,14 +153,14 @@ async function giveReward(rid){const cr=doc(db,"customers",uid),rr=doc(db,"custo
    tx.update(cr,{points:p});tx.update(rr,{status:"used",usedAt:serverTimestamp(),by:auth.currentUser.email});
    tx.set(doc(collection(db,"customers",uid,"log")),{type:"reward",reward:rw.n,points:-rw.p,at:serverTimestamp(),by:auth.currentUser.email});return{p,n:rw.n}});
   cur=out.p;$("#cpts").textContent=out.p;calc();toast("تم تسليم "+out.n+" ✓ الرصيد: "+out.p)}
- catch(e){toast({neg:"الرصيد ما بكفي",exp:"انتهت صلاحية الكود",used:"هذا الطلب انستخدم قبل",gone:"الزبون ألغى الطلب"}[e.message]||"فشلت العملية، جرب مرة ثانية")}
+ catch(e){toast({neg:"الرصيد ما بكفي",exp:"انتهت صلاحية الكود",used:"هذا الطلب انستخدم قبل",gone:"الزبون ألغى الطلب"}[e.message]||"فشلت العملية ("+(e.code||e.message)+")");console.error("giveReward",e)}
  loadRew()}
 async function apply(delta,extra){const ref=doc(db,"customers",uid);$("#add").disabled=$("#use").disabled=true;
  try{const n=await runTransaction(db,async tx=>{const s=await tx.get(ref),p=s.data().points+delta;if(p<0)throw new Error("neg");
   tx.update(ref,{points:p});tx.set(doc(collection(db,"customers",uid,"log")),{points:delta,at:serverTimestamp(),by:auth.currentUser.email,...extra});return p});
   cur=n;const e=$("#cpts");e.textContent=n;e.classList.remove("bump");void e.offsetWidth;e.classList.add("bump");
   amtS="";redN=0;calc();toast("تمت العملية ✓ الرصيد الجديد: "+n)}
- catch{$("#err").textContent="";toast("فشلت العملية، جرب مرة ثانية");calc()}}
+ catch(e){$("#err").textContent="";toast(e.message==="neg"?"الرصيد ما بكفي":"فشلت العملية ("+(e.code||e.message)+")");console.error("apply",e);calc()}}
 $("#add").onclick=()=>{const a=parseFloat(amtS);apply(Math.floor(a*POINTS_PER_JD),{type:"earn",amount:a})};
 $("#use").onclick=()=>{const r=redN;apply(-r,{type:"redeem",discount:r/PTS_PER_DISCOUNT_JD})};
 $("#next").onclick=()=>{uid=null;$("#cus").classList.add("hid");$("#scanBox").classList.remove("hid");$("#ph").value="";amtS="";redN=0;$("#err").textContent="";startCam()};
